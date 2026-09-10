@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Field Ops - Map View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#410000",
+                      "secondary-fixed-dim": "#c5c7c8",
+                      "on-primary-container": "#79849b",
+                      "primary-fixed-dim": "#bbc7df",
+                      "surface-tint": "#535f74",
+                      "navy-ink": "#0F1B2D",
+                      "surface-dim": "#d2daeb",
+                      "primary-container": "#101c2e",
+                      "on-tertiary-fixed-variant": "#8e130c",
+                      "surface": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-surface-variant": "#44474c",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary-fixed": "#101c2e",
+                      "surface-variant": "#dae3f4",
+                      "on-primary-fixed-variant": "#3c475b",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e0e9f9",
+                      "priority-amber": "#D98324",
+                      "secondary": "#5c5f60",
+                      "on-secondary-container": "#606365",
+                      "muted-text": "#5B6472",
+                      "on-tertiary-container": "#e45342",
+                      "primary": "#000000",
+                      "inverse-primary": "#bbc7df",
+                      "outline-variant": "#c5c6cd",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#dee0e2",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#e1e2e4",
+                      "paper-bg": "#F7F8FA",
+                      "surface-container-low": "#eff4ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#410000",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#444749",
+                      "hazard-red": "#C0392B",
+                      "on-secondary-fixed": "#191c1e",
+                      "tertiary-fixed": "#ffdad5",
+                      "on-surface": "#131c28",
+                      "tertiary-fixed-dim": "#ffb4a9",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-background": "#131c28",
+                      "outline": "#75777d",
+                      "safe-teal": "#1F7A5C",
+                      "primary-fixed": "#d7e3fc",
+                      "tertiary": "#000000",
+                      "inverse-surface": "#28313d",
+                      "surface-container-highest": "#dae3f4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "gutter": "16px",
+                      "stack-sm": "8px",
+                      "container-padding": "24px",
+                      "stack-lg": "32px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "IBM Plex Serif"
+                      ],
+                      "data-tabular": [
+                              "IBM Plex Mono"
+                      ],
+                      "label-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-main": [
+                              "IBM Plex Sans"
+                      ],
+                      "display-lg": [
+                              "IBM Plex Serif"
+                      ],
+                      "verdict-lg": [
+                              "IBM Plex Serif"
+                      ],
+                      "verdict-xl": [
+                              "IBM Plex Serif"
+                      ],
+                      "body-sm": [
+                              "IBM Plex Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-tabular": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-main": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "verdict-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "verdict-xl": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .map-grid {
+            background-image: 
+                linear-gradient(to right, rgba(91, 100, 114, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(91, 100, 114, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-paper-bg text-on-surface font-body-main h-full flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-container-padding bg-navy-ink text-on-primary font-headline-md text-headline-md docked full-width top-0 border-b border-muted-text/20 flat no shadows h-16 shrink-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 transition-colors hover:bg-primary-container p-2 rounded" data-icon="account_balance">account_balance</span>
+<div class="font-display-lg text-display-lg text-on-primary tracking-tight">FIELD OPS: DISASTER MGMT</div>
+</div>
+<div class="flex items-center gap-4 h-full">
+<!-- Top Nav (hidden on mobile, assumed to be here based on JSON logic but mostly handled by side nav on desktop, adding a generic tab for demonstration) -->
+<div class="hidden md:flex h-full items-center">
+<div class="h-full flex items-center px-4 cursor-pointer active:opacity-80 hover:bg-primary-container transition-colors text-on-primary-container">Dashboard</div>
+<div class="h-full flex items-center px-4 cursor-pointer active:opacity-80 hover:bg-primary-container transition-colors text-on-primary border-b-2 border-on-primary">Map View</div>
+</div>
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 transition-colors hover:bg-primary-container p-2 rounded" data-icon="notifications">notifications</span>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- NavigationDrawer -->
+<nav class="hidden md:flex flex-col h-screen sticky top-0 bg-surface-container-lowest text-primary font-label-caps text-label-caps docked left-0 h-full w-64 border-r border-muted-text/20 flat no shadows shrink-0 z-40">
+<div class="p-container-padding pb-4 border-b border-muted-text/20 mb-4">
+<div class="font-headline-md text-headline-md text-navy-ink">STRATEGIC HUB</div>
+</div>
+<div class="flex flex-col gap-1 px-4">
+<!-- Map View (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-150 ease-in-out bg-primary-container text-on-primary-container font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="map" data-weight="fill" style="font-variation-settings: 'FILL' 1;">map</span>
+<span>Map View</span>
+</a>
+<!-- Assessments -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-150 ease-in-out text-muted-text hover:text-navy-ink hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span>Assessments</span>
+</a>
+<!-- Resources -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-150 ease-in-out text-muted-text hover:text-navy-ink hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Resources</span>
+</a>
+<!-- Protocols -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT transition-all duration-150 ease-in-out text-muted-text hover:text-navy-ink hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Protocols</span>
+</a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- Context Header -->
+<div class="bg-surface-container-lowest border-b border-muted-text/20 px-container-padding py-stack-md shrink-0">
+<div class="max-w-[1120px] mx-auto w-full">
+<h1 class="font-display-lg text-display-lg text-navy-ink mb-stack-sm">Red Zone &amp; Relocation Assessment</h1>
+<!-- Tabs -->
+<div class="flex gap-stack-md border-b border-muted-text/20 mt-stack-md">
+<button class="px-4 py-2 font-label-caps text-label-caps border-b-2 border-navy-ink text-navy-ink -mb-[1px]">MAP</button>
+<button class="px-4 py-2 font-label-caps text-label-caps border-b-2 border-transparent text-muted-text hover:text-navy-ink transition-colors -mb-[1px]">ASSESSMENT</button>
+</div>
+</div>
+</div>
+<!-- Map Container -->
+<div class="flex-1 relative bg-[#e5e7eb] overflow-hidden map-grid min-h-[500px]">
+<!-- Mock Topographic Base -->
+<div class="absolute inset-0 opacity-30" data-alt="A detailed high-contrast monochrome topographic map texture showing intricate elevation contour lines, minimal shading, stark professional cartographic style, light mode aesthetic, perfectly flat overhead view." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD34k36HvJXAqPsEZ9wkwlZ1DuzrBcG3hUll_Zae-sXuE7Pujfh9jYXjaBmVrnmFETCIvOJXrE1g5lvUpHTL0_6l08Gd8UOS1DiWfOkfvKkZmUtL-oH8T6V1FwWZUfsGL4XxjZigELjNtp2CeN0dTC4Iz1v7RsIezQ93GNpcDioXJ-SN0EfvxacwarIcsLvV0ko19ctke2JArHKdIIuYxWSqzRODkQgi8OSkLRqoK9bUABljp8GnC6x')"></div>
+<!-- Hazard Zone Overlay -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveaspectratio="none">
+<polygon fill="rgba(192, 57, 43, 0.2)" points="20%,30% 40%,20% 60%,40% 70%,70% 30%,80% 15%,60%" stroke="#C0392B" stroke-dasharray="4,4" stroke-width="2"></polygon>
+</svg>
+<!-- Map Controls -->
+<div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+<div class="bg-surface-container-lowest border border-muted-text/20 rounded shadow-sm flex flex-col">
+<button class="p-2 hover:bg-surface-container-high transition-colors border-b border-muted-text/20 text-navy-ink">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high transition-colors text-navy-ink">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="bg-surface-container-lowest border border-muted-text/20 rounded shadow-sm p-2 hover:bg-surface-container-high transition-colors text-navy-ink">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- Legend Panel -->
+<div class="absolute bottom-4 left-4 bg-surface-container-lowest border border-muted-text/20 p-4 rounded shadow-sm z-10 max-w-xs">
+<h3 class="font-label-caps text-label-caps text-navy-ink mb-3 border-b border-muted-text/20 pb-2">LEGEND</h3>
+<div class="flex flex-col gap-2 font-data-tabular text-data-tabular text-on-surface">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-hazard-red"></div>
+<span>Critical Danger (Alpha Base)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-safe-teal"></div>
+<span>Safe Zone (Haven)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-0 border-t-2 border-dashed border-hazard-red"></div>
+<span>Projected Hazard Area</span>
+</div>
+</div>
+</div>
+<!-- Markers (Interactive) -->
+<!-- Alpha Base (Red) -->
+<div class="absolute top-[40%] left-[45%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20">
+<div class="relative">
+<span class="material-symbols-outlined text-hazard-red text-[32px] drop-shadow-md group-hover:scale-110 transition-transform" data-weight="fill" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<div class="absolute top-full mt-1 left-1/2 -translate-x-1/2 bg-surface-container-lowest border border-hazard-red text-hazard-red font-label-caps text-label-caps px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                            ALPHA BASE
+                        </div>
+</div>
+</div>
+<!-- Safe Haven (Green) -->
+<div class="absolute top-[75%] left-[80%] -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20">
+<div class="relative">
+<span class="material-symbols-outlined text-safe-teal text-[32px] drop-shadow-md group-hover:scale-110 transition-transform" data-weight="fill" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<div class="absolute top-full mt-1 left-1/2 -translate-x-1/2 bg-surface-container-lowest border border-safe-teal text-safe-teal font-label-caps text-label-caps px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                            SAFE HAVEN 4
+                        </div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 w-full flex justify-around py-2 bg-surface-container-highest text-navy-ink font-label-caps text-label-caps docked full-width bottom-0 z-50 border-t border-muted-text/20 shadow-sm h-[72px]">
+<!-- Map View (Active equivalent on mobile) -->
+<a class="flex flex-col items-center justify-center bg-navy-ink text-white rounded-xl px-4 py-1 scale-95 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="map">map</span>
+<span class="text-[10px]">MAP</span>
+</a>
+<!-- Planner (Inactive) -->
+<a class="flex flex-col items-center justify-center text-muted-text hover:text-navy-ink scale-95 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="text-[10px]">Planner</span>
+</a>
+<!-- Village Search (Inactive) -->
+<a class="flex flex-col items-center justify-center text-muted-text hover:text-navy-ink scale-95 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="location_city">location_city</span>
+<span class="text-[10px]">Village Search</span>
+</a>
+</nav>
+</body></html>

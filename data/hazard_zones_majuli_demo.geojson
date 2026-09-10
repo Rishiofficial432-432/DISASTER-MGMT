@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"hazard_type": "flood", "severity": "high", "source": "demo/NDMA Assam Flood Hazard Atlas (illustrative)"}, "geometry": {"type": "Polygon", "coordinates": [[[94.16, 26.97], [94.22, 26.97], [94.22, 27.02], [94.16, 27.02], [94.16, 26.97]]]}}]}

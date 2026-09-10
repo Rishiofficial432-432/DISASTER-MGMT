@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Allocation · SIH26191</title>
+  <meta name="description" content="Settlement priority counts and resource allocation planning — SIH26191">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .res-layout { max-width: 1000px; margin: 0 auto; padding: 36px 24px 80px; display: flex; flex-direction: column; gap: 24px; }
+    .page-hero { border-bottom: 2px solid var(--navy-ink); padding-bottom: 20px; }
+    .page-hero h1 { font-family: 'IBM Plex Serif', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--navy-ink); letter-spacing: -0.02em; margin-bottom: 8px; }
+    .page-hero p { font-size: 0.92rem; color: var(--muted-text); line-height: 1.6; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+    .summary-card { background: var(--surface-container-lowest); border: 1px solid rgba(91,100,114,0.2); border-radius: 8px; padding: 24px 20px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+    .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .summary-card.high::before   { background: var(--hazard-red); }
+    .summary-card.medium::before { background: var(--priority-amber); }
+    .summary-card.low::before    { background: var(--safe-teal); }
+    .summary-num { font-family: 'IBM Plex Mono', monospace; font-size: 3rem; font-weight: 700; line-height: 1; }
+    .summary-card.high   .summary-num { color: var(--hazard-red); }
+    .summary-card.medium .summary-num { color: var(--priority-amber); }
+    .summary-card.low    .summary-num { color: var(--safe-teal); }
+    .summary-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-text); margin-top: 6px; }
+    .summary-sub { font-size: 0.75rem; color: var(--muted-text); margin-top: 4px; }
+    .table-card { background: var(--surface-container-lowest); border: 1px solid rgba(91,100,114,0.2); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .table-card-header { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--surface-container-low); border-bottom: 1px solid rgba(91,100,114,0.15); font-family: 'IBM Plex Serif', serif; font-size: 1rem; font-weight: 600; color: var(--navy-ink); }
+    .table-card-header .material-symbols-outlined { font-size: 20px; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .data-table th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-text); padding: 10px 16px; border-bottom: 1px solid rgba(91,100,114,0.2); white-space: nowrap; }
+    .data-table td { padding: 12px 16px; border-bottom: 1px solid rgba(91,100,114,0.08); vertical-align: middle; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover { background: var(--surface-container-low); }
+    .data-table .mono { font-family: 'IBM Plex Mono', monospace; }
+    .priority-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 3px 10px; border-radius: 99px; }
+    .priority-badge.high   { background: var(--hazard-red-bg); color: var(--hazard-red); }
+    .priority-badge.medium { background: var(--amber-bg);      color: var(--priority-amber); }
+    .priority-badge.low    { background: var(--teal-bg);        color: var(--safe-teal); }
+    .hazard-dot { display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+    .hazard-dot.in  { color: var(--hazard-red); }
+    .hazard-dot.out { color: var(--safe-teal); }
+    .hazard-dot .material-symbols-outlined { font-size: 15px; }
+    .detail-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-text); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.12s; }
+    .detail-link:hover { color: var(--navy-ink); }
+    .detail-link .material-symbols-outlined { font-size: 14px; }
+    .disclaimer-box { background: var(--surface-container-lowest); border: 1px solid rgba(91,100,114,0.2); border-radius: 8px; padding: 20px; font-size: 0.83rem; color: var(--muted-text); line-height: 1.7; display: flex; gap: 14px; align-items: flex-start; }
+    .disclaimer-box .material-symbols-outlined { font-size: 22px; color: var(--outline-variant); flex-shrink: 0; }
+    .empty-row td { text-align: center; padding: 40px; color: var(--muted-text); font-style: italic; }
+    .loading-row td { text-align: center; padding: 30px; color: var(--muted-text); }
+    .demo-banner { background: #FFF8E1; border-bottom: 1px solid #FFCC02; color: #5A4000; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.05em; padding: 7px 20px; display: flex; align-items: center; gap: 8px; }
+    .demo-banner strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="material-symbols-outlined topbar-icon" style="font-variation-settings:'FILL' 1">account_balance</span>
+    FIELD OPS: DISASTER MGMT
+  </div>
+  <div class="topbar-right" style="display:flex;align-items:center;gap:20px;">
+    <select id="region-select" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.03em;border:1px solid rgba(255,255,255,0.25);border-radius:5px;padding:5px 9px;background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;">
+      <option value="majuli">Majuli, Assam (pilot)</option>
+      <option value="national">All-India — real data (53,223 villages)</option>
+    </select>
+    <nav style="display:flex;gap:20px;">
+      <a href="/dashboard" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none">Dashboard</a>
+      <a href="/protocols"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none">Protocols</a>
+      <a href="/resources"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:#fff;text-decoration:none;font-weight:600">Resources</a>
+    </nav>
+    <a href="/" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none">← Village Search</a>
+  </div>
+</header>
+
+<!-- DEMO DATA DISCLAIMER BANNER -->
+<div class="demo-banner" id="demo-banner" role="alert">
+  <span class="material-symbols-outlined" style="font-size:15px;color:#C07000;font-variation-settings:'FILL' 1">info</span>
+  <strong>DEMO DATA — NOT FOR OFFICIAL USE.</strong>&nbsp; Counts are based on demonstration settlements. Do not use for real resource planning.
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:#5A4000;line-height:1;padding:0 2px;" title="Dismiss">&times;</button>
+</div>
+
+<main class="res-layout">
+
+  <div class="page-hero">
+    <h1>Strategic Resource Allocation</h1>
+    <p>Settlement counts by priority tier, computed live from the assessment pipeline. Use these counts to plan field resource deployment.</p>
+  </div>
+
+  <!-- SUMMARY TIER CARDS -->
+  <div class="summary-grid" id="summary-cards">
+    <div class="summary-card high">
+      <div class="summary-num" id="count-high">—</div>
+      <div class="summary-label">High Priority</div>
+      <div class="summary-sub">Urgent relocation consideration</div>
+    </div>
+    <div class="summary-card medium">
+      <div class="summary-num" id="count-medium">—</div>
+      <div class="summary-label">Medium Priority</div>
+      <div class="summary-sub">Close monitoring required</div>
+    </div>
+    <div class="summary-card low">
+      <div class="summary-num" id="count-low">—</div>
+      <div class="summary-label">Low Priority</div>
+      <div class="summary-sub">Lower immediate risk</div>
+    </div>
+  </div>
+
+  <!-- FULL TABLE -->
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">table_chart</span>
+      All Settlements — Ranked by Priority
+    </div>
+    <p class="footnote" id="table-cap-notice" style="display:none;padding:10px 20px 0;font-size:0.75rem;color:var(--muted-text);"></p>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Settlement</th>
+            <th>Priority</th>
+            <th>Score</th>
+            <th>Population</th>
+            <th>Density (pph)</th>
+            <th>Hazard</th>
+            <th>Terrain</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr class="loading-row"><td colspan="8">Loading assessment data…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer-box">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">info</span>
+    <div>
+      <strong>About this data:</strong> This prototype does not model actual resource inventories (shelters, personnel, supplies).
+      It surfaces settlement counts by priority tier so an operator can plan allocation manually.
+      A production version would integrate live logistics data.
+      All hazard data is for demonstration only — not sourced from a live NDMA/NRSC feed.
+      See <a href="/protocols" style="color:var(--navy-ink)">Protocols &amp; Guidelines</a> for the full scoring methodology.
+    </div>
+  </div>
+
+</main>
+
+<footer style="background:var(--navy-ink);color:rgba(255,255,255,0.5);padding:14px 24px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">
+  SIH26191 · Red Zone &amp; Relocation Assessment · Demo data — not for official use
+</footer>
+
+<script>
+const MAX_ROWS_RENDERED = 150; // avoid freezing the browser at national scale (54,341 settlements)
+
+let CURRENT_REGION = (() => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("region") === "national" ? "national" : "majuli";
+})();
+
+async function load() {
+  let data = null;
+  try {
+    const res = await fetch(`/api/assessment-summary?region=${CURRENT_REGION}`);
+    if (res.ok) data = await res.json();
+  } catch {}
+
+  const counts = (data && data.counts) || { high: 0, medium: 0, low: 0 };
+  document.getElementById("count-high").textContent   = counts.high.toLocaleString();
+  document.getElementById("count-medium").textContent = counts.medium.toLocaleString();
+  document.getElementById("count-low").textContent    = counts.low.toLocaleString();
+
+  const tbody = document.getElementById("table-body");
+  const notice = document.getElementById("table-cap-notice");
+  const rows = (data && data.top) || [];
+  const total = (data && data.total) || 0;
+
+  if (!rows.length) {
+    notice.style.display = "none";
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="8">No settlements in the current assessment. <a href="/?region=${CURRENT_REGION}" style="color:#0F1B2D">Add one →</a></td></tr>`;
+    return;
+  }
+
+  if (total > rows.length) {
+    notice.style.display = "block";
+    notice.textContent = `Showing top ${rows.length} of ${total.toLocaleString()} settlements, ranked by priority score.`;
+  } else {
+    notice.style.display = "none";
+  }
+
+  tbody.innerHTML = rows.map(a => {
+    const hazardHtml = a.hazard_type
+      ? `<span class="hazard-dot in"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">warning</span> ${a.hazard_type}</span>`
+      : `<span class="hazard-dot out"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">check_circle</span> None</span>`;
+
+    return `
+      <tr>
+        <td style="font-weight:600;color:var(--navy-ink)">${a.settlement_id}</td>
+        <td><span class="priority-badge ${a.priority_rank}">${a.priority_rank}</span></td>
+        <td class="mono">${a.priority_score} / 6</td>
+        <td class="mono">${a.population.toLocaleString()}</td>
+        <td class="mono">${a.persons_per_hectare} <span style="font-size:0.72rem;color:var(--muted-text)">(${a.density_tier})</span></td>
+        <td>${hazardHtml}</td>
+        <td style="text-transform:capitalize;color:var(--muted-text)">${a.terrain}</td>
+        <td>
+          <a class="detail-link" href="/settlement/${encodeURIComponent(a.settlement_id)}?region=${CURRENT_REGION}">
+            Detail <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </td>
+      </tr>`;
+  }).join("");
+}
+
+const regionSelect = document.getElementById("region-select");
+regionSelect.value = CURRENT_REGION;
+regionSelect.addEventListener("change", () => {
+  CURRENT_REGION = regionSelect.value;
+  load();
+});
+
+load();
+</script>
+</body>
+</html>

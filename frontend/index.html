@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check My Village · SIH26191 — Red Zone &amp; Relocation Assessment</title>
+  <meta name="description" content="Check if your village is in a flood hazard zone. SIH26191 — Red Zone & Relocation Assessment, Majuli, Assam.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0F1B2D;
+      --paper: #F7F8FA;
+      --surface: #ffffff;
+      --red: #C0392B;
+      --amber: #D98324;
+      --teal: #1F7A5C;
+      --muted: #5B6472;
+      --line: #E1E4EA;
+      --surface-low: #eff4ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--paper);
+      color: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { text-decoration: none; color: inherit; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle; line-height: 1;
+      display: inline-flex; align-items: center;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--navy);
+      color: #fff;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.03em;
+    }
+    .topbar-brand .material-symbols-outlined { font-size: 26px; }
+    .topbar-nav { display: flex; gap: 24px; }
+    .topbar-nav a {
+      font-size: 0.82rem; color: rgba(255,255,255,0.7);
+      transition: color 0.15s;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+    .topbar-nav a:hover { color: #fff; }
+    @media (max-width: 600px) { .topbar-nav { display: none; } }
+
+    /* ── HERO SECTION ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px 32px;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; flex: 1; max-width: 40px;
+      height: 1px; background: var(--amber); opacity: 0.4;
+    }
+
+    .hero-title {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .hero-title span { color: var(--red); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    /* ── SEARCH CARD ── */
+    .search-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 28px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(15,27,45,0.08);
+    }
+
+    .search-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-input {
+      flex: 1;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--navy);
+      background: var(--surface-low);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px 16px;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { outline: none; border-color: var(--navy); background: #fff; }
+    .search-input::placeholder { color: rgba(91,100,114,0.5); }
+
+    .search-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .search-btn:hover  { background: #1B2C4A; }
+    .search-btn:active { transform: scale(0.98); }
+    .search-btn .material-symbols-outlined { font-size: 18px; }
+
+    .locate-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
+      background: none;
+      color: var(--navy);
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      padding: 11px 16px;
+      margin-top: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .locate-btn:hover { background: var(--surface-low); border-color: var(--navy); }
+    .locate-btn:disabled { opacity: 0.5; cursor: default; }
+    .locate-btn .material-symbols-outlined { font-size: 17px; }
+
+    .search-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    .search-hint a { color: var(--navy); text-decoration: underline; }
+
+    /* ── RESULTS ── */
+    #result-area { margin-top: 20px; }
+    .result-card {
+      border-radius: 8px;
+      border: 2px solid;
+      padding: 20px 24px;
+      text-align: left;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; } }
+    .result-card.rank-high   { border-color: var(--red);   background: #FBEAEA; }
+    .result-card.rank-medium { border-color: var(--amber); background: #FCF1E3; }
+    .result-card.rank-low    { border-color: var(--teal);  background: #E9F4EE; }
+    .result-card.not-found   { border-color: var(--line);  background: var(--surface-low); }
+
+    .result-verdict {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .result-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .result-stats {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      padding: 14px 0;
+      border-top: 1px solid rgba(15,27,45,0.1);
+      border-bottom: 1px solid rgba(15,27,45,0.1);
+      margin-bottom: 16px;
+    }
+    .stat-val {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+    .result-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--navy); color: #fff;
+      border: none; border-radius: 5px;
+      padding: 9px 18px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .result-cta:hover { background: #1B2C4A; }
+    .result-cta .material-symbols-outlined { font-size: 15px; }
+
+    .error-msg {
+      border-radius: 8px; border: 1px solid var(--line);
+      padding: 18px 20px;
+      background: var(--surface);
+      font-size: 0.88rem; color: var(--muted);
+      text-align: left;
+    }
+
+    /* ── QUICK LINKS ── */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      width: 100%;
+      margin-top: 32px;
+    }
+    .quick-link {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: box-shadow 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+    .quick-link:hover { box-shadow: 0 4px 16px rgba(15,27,45,0.1); border-color: #b0b8c9; }
+    .quick-link .material-symbols-outlined { font-size: 22px; color: var(--navy); margin-bottom: 2px; }
+    .quick-link-title { font-family: 'IBM Plex Serif', serif; font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+    .quick-link-desc  { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.6);
+      padding: 16px 24px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    footer a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+
+    /* ── DEMO BANNER ── */
+    .demo-banner {
+      background: #FFF8E1;
+      border-bottom: 1px solid #FFCC02;
+      color: #5A4000;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      padding: 7px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .demo-banner strong { font-weight: 700; }
+    .demo-banner .ico { font-size: 15px; color: #C07000; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">account_balance</span>
+    FIELD OPS: DISASTER MGMT
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <select id="region-select" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.03em;border:1px solid rgba(255,255,255,0.25);border-radius:5px;padding:5px 9px;background:rgba(255,255,255,0.08);color:#fff;cursor:pointer;">
+      <option value="majuli">Majuli, Assam (pilot)</option>
+      <option value="national">All-India — real data (53,223 villages)</option>
+    </select>
+    <nav class="topbar-nav">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/protocols">Protocols</a>
+      <a href="/resources">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<!-- DEMO DATA DISCLAIMER BANNER -->
+<div class="demo-banner" id="demo-banner" role="alert">
+  <span class="material-symbols-outlined ico" style="font-variation-settings:'FILL' 1">info</span>
+  <strong>DEMO DATA — NOT FOR OFFICIAL USE.</strong>&nbsp; Hazard zone is illustrative only. Do not use verdicts for real emergency decisions.
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:#5A4000;line-height:1;padding:0 2px;" title="Dismiss">&times;</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" id="hero-eyebrow">SIH26191 · Majuli, Assam</div>
+
+  <h1 class="hero-title">
+    Is your village in a<br><span>Red Zone?</span>
+  </h1>
+  <p class="hero-sub">
+    Search by settlement name to instantly check flood-hazard exposure,
+    population density, and relocation priority — powered by our real-time assessment pipeline.
+  </p>
+
+  <!-- SEARCH -->
+  <div class="search-card">
+    <label class="search-label" for="village-search">Enter your settlement name</label>
+    <div class="search-row">
+      <input
+        class="search-input"
+        id="village-search"
+        type="text"
+        placeholder="e.g. Kamalabari Gaon, MJ-014…"
+        autocomplete="off"
+        list="settlement-suggestions"
+      >
+      <datalist id="settlement-suggestions"></datalist>
+      <button class="search-btn" id="search-btn" type="button">
+        <span class="material-symbols-outlined">search</span>
+        Check
+      </button>
+    </div>
+    <button class="locate-btn" id="locate-btn" type="button">
+      <span class="material-symbols-outlined">my_location</span>
+      Use My Location — auto-detect nearest village
+    </button>
+    <p class="search-hint" id="search-hint">
+      Not sure of the name? <a href="/dashboard">Browse the full map →</a>
+    </p>
+
+    <div id="result-area"></div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="quick-links">
+    <a class="quick-link" href="/dashboard">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">map</span>
+      <div class="quick-link-title">Map Dashboard</div>
+      <div class="quick-link-desc">Interactive hazard map with all settlements plotted.</div>
+    </a>
+    <a class="quick-link" href="/resources">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">inventory_2</span>
+      <div class="quick-link-title">Resource Allocation</div>
+      <div class="quick-link-desc">Priority tier counts and settlement-level breakdown.</div>
+    </a>
+    <a class="quick-link" href="/protocols">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">gavel</span>
+      <div class="quick-link-title">Protocols &amp; Guidelines</div>
+      <div class="quick-link-desc">Official relocation procedures and reference documents.</div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="page-footer">
+  SIH26191 · Red Zone &amp; Relocation Assessment · Pilot: Majuli, Assam ·
+  <a href="/protocols">Demo data — not for official use</a>
+</footer>
+
+<script>
+const VERDICT = {
+  high:   { label: "⚠ URGENT — High Priority", sub: "This settlement is in or near a hazard zone and has high relocation priority." },
+  medium: { label: "! WATCH — Medium Priority", sub: "This settlement has moderate flood-hazard exposure. Monitor closely." },
+  low:    { label: "✓ SAFE — Low Priority",     sub: "This settlement has low relocation priority based on current data." },
+};
+
+const REGION_TEXT = {
+  majuli: {
+    eyebrow: "SIH26191 · Majuli, Assam",
+    hint: 'Not sure of the name? <a href="/dashboard?region=majuli">Browse the full map →</a>',
+    footer: 'SIH26191 · Red Zone &amp; Relocation Assessment · Pilot: Majuli, Assam · <a href="/protocols">Demo data — not for official use</a>',
+  },
+  national: {
+    eyebrow: "SIH26191 · All-India Flood-History Dataset",
+    hint: 'Not sure of the name? <a href="/dashboard?region=national">Browse the full map →</a> (53,223 real villages, 15 states, real Census population)',
+    footer: 'SIH26191 · Red Zone &amp; Relocation Assessment · All-India dataset · <a href="/protocols">Demo data — not for official use</a>',
+  },
+};
+
+let CURRENT_REGION = (() => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("region") === "national" ? "national" : "majuli";
+})();
+
+function applyRegionText() {
+  const t = REGION_TEXT[CURRENT_REGION];
+  document.getElementById("hero-eyebrow").textContent = t.eyebrow;
+  document.getElementById("search-hint").innerHTML = t.hint;
+  document.getElementById("page-footer").innerHTML = t.footer;
+}
+
+// Datalist suggestions: only populated for the small Majuli pilot (2
+// villages). Skipping this for the national dataset on purpose -- loading
+// 54,341 <option> elements into a <datalist> would be a real performance
+// problem in the browser. National search instead relies entirely on the
+// server-side substring match in /api/village-check, which is fast (no
+// need to ship the whole dataset to the client just for autocomplete).
+async function loadSuggestions() {
+  const dl = document.getElementById("settlement-suggestions");
+  dl.innerHTML = "";
+  if (CURRENT_REGION !== "majuli") return;
+  try {
+    const res = await fetch(`/api/settlements?region=${CURRENT_REGION}`);
+    if (!res.ok) return;
+    const settlements = await res.json();
+    settlements.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.name;
+      dl.appendChild(opt);
+    });
+  } catch {}
+}
+
+async function doSearch() {
+  const query = document.getElementById("village-search").value.trim();
+  const area  = document.getElementById("result-area");
+  area.innerHTML = "";
+  if (!query) return;
+
+  area.innerHTML = `<div class="error-msg" style="margin-top:16px">Checking…</div>`;
+
+  let hit = null;
+  try {
+    const res = await fetch(`/api/village-check?q=${encodeURIComponent(query)}&region=${CURRENT_REGION}`);
+    if (res.ok) hit = await res.json();
+  } catch {}
+
+  if (!hit || !hit.found) {
+    area.innerHTML = `
+      <div class="error-msg" style="margin-top:16px">
+        <strong>Settlement not found:</strong> "${query}"<br>
+        Try a different name, or <a href="/dashboard?region=${CURRENT_REGION}" style="color:#0F1B2D">browse the map</a> to see all settlements.
+      </div>`;
+    return;
+  }
+
+  const v = VERDICT[hit.priority_rank] || VERDICT.low;
+
+  area.innerHTML = `
+    <div class="result-card rank-${hit.priority_rank}" style="margin-top:16px">
+      <div class="result-verdict">${v.label}</div>
+      <div class="result-sub">${hit.message}</div>
+      <div class="result-stats">
+        <div>
+          <div class="stat-val">${hit.priority_score}</div>
+          <div class="stat-label">Priority Score</div>
+        </div>
+      </div>
+      <a class="result-cta" href="/settlement/${encodeURIComponent(hit.settlement_id)}?region=${CURRENT_REGION}">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">open_in_new</span>
+        Full Settlement Detail
+      </a>
+    </div>`;
+}
+
+document.getElementById("search-btn").addEventListener("click", doSearch);
+document.getElementById("village-search").addEventListener("keydown", e => {
+  if (e.key === "Enter") doSearch();
+});
+
+/* ── Use My Location: browser Geolocation → /api/nearest-village ── */
+const locateBtn = document.getElementById("locate-btn");
+locateBtn.addEventListener("click", () => {
+  const area = document.getElementById("result-area");
+
+  if (!("geolocation" in navigator)) {
+    area.innerHTML = `<div class="error-msg" style="margin-top:16px">Geolocation isn't supported in this browser. Please search by name instead.</div>`;
+    return;
+  }
+
+  locateBtn.disabled = true;
+  locateBtn.innerHTML = `<span class="material-symbols-outlined">hourglass_top</span> Detecting your location…`;
+  area.innerHTML = "";
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      area.innerHTML = `<div class="error-msg" style="margin-top:16px">Location found. Looking up the nearest village…</div>`;
+      try {
+        const res = await fetch(`/api/nearest-village?lat=${latitude}&lon=${longitude}&region=${CURRENT_REGION}`);
+        const hit = await res.json();
+
+        if (!res.ok || !hit.found) {
+          area.innerHTML = `<div class="error-msg" style="margin-top:16px">Couldn't find a nearby village in the current dataset (${CURRENT_REGION}). Try switching region, or search by name.</div>`;
+        } else {
+          const v = VERDICT[hit.priority_rank] || VERDICT.low;
+          const distanceNote = hit.distance_km > 25
+            ? `<div style="font-size:0.78rem;color:var(--amber);margin-bottom:10px;">⚠ Nearest match is ${hit.distance_km} km away — you may be outside this dataset's coverage area.</div>`
+            : `<div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;">Nearest match: ${hit.distance_km} km from your detected location.</div>`;
+          area.innerHTML = `
+            <div class="result-card rank-${hit.priority_rank}" style="margin-top:16px">
+              ${distanceNote}
+              <div class="result-verdict">${hit.settlement_id} — ${v.label}</div>
+              <div class="result-sub">${hit.message}</div>
+              <div class="result-stats">
+                <div>
+                  <div class="stat-val">${hit.priority_score}</div>
+                  <div class="stat-label">Priority Score</div>
+                </div>
+              </div>
+              <a class="result-cta" href="/settlement/${encodeURIComponent(hit.settlement_id)}?region=${CURRENT_REGION}">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">open_in_new</span>
+                Full Settlement Detail
+              </a>
+            </div>`;
+        }
+      } catch {
+        area.innerHTML = `<div class="error-msg" style="margin-top:16px">Network error — is the server running?</div>`;
+      }
+      locateBtn.disabled = false;
+      locateBtn.innerHTML = `<span class="material-symbols-outlined">my_location</span> Use My Location — auto-detect nearest village`;
+    },
+    (err) => {
+      let msg = "Couldn't get your location.";
+      if (err.code === err.PERMISSION_DENIED) msg = "Location permission denied. Please allow location access, or search by name instead.";
+      area.innerHTML = `<div class="error-msg" style="margin-top:16px">${msg}</div>`;
+      locateBtn.disabled = false;
+      locateBtn.innerHTML = `<span class="material-symbols-outlined">my_location</span> Use My Location — auto-detect nearest village`;
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+});
+
+const regionSelect = document.getElementById("region-select");
+regionSelect.value = CURRENT_REGION;
+regionSelect.addEventListener("change", () => {
+  CURRENT_REGION = regionSelect.value;
+  applyRegionText();
+  document.getElementById("result-area").innerHTML = "";
+  document.getElementById("village-search").value = "";
+  loadSuggestions();
+});
+
+applyRegionText();
+loadSuggestions();
+</script>
+</body>
+</html>

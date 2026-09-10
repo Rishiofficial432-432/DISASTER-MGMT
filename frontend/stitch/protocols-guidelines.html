@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicReloc - Operational Protocols &amp; Safety Guidelines</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=IBM+Plex+Serif:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dae3f4",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#79849b",
+                        "primary-container": "#101c2e",
+                        "primary-fixed": "#d7e3fc",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#444749",
+                        "surface-tint": "#535f74",
+                        "safe-teal": "#1F7A5C",
+                        "priority-amber": "#D98324",
+                        "tertiary": "#000000",
+                        "surface-dim": "#d2daeb",
+                        "inverse-surface": "#28313d",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "navy-ink": "#0F1B2D",
+                        "primary-fixed-dim": "#bbc7df",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-high": "#e0e9f9",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed-variant": "#3c475b",
+                        "on-tertiary-fixed": "#410000",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-surface-variant": "#44474c",
+                        "inverse-primary": "#bbc7df",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "paper-bg": "#F7F8FA",
+                        "secondary": "#5c5f60",
+                        "tertiary-container": "#410000",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "on-secondary-container": "#606365",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#8e130c",
+                        "on-primary-fixed": "#101c2e",
+                        "on-tertiary-container": "#e45342",
+                        "secondary-fixed": "#e1e2e4",
+                        "on-background": "#131c28",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#dae3f4",
+                        "hazard-red": "#C0392B",
+                        "primary": "#000000",
+                        "secondary-container": "#dee0e2",
+                        "outline": "#75777d",
+                        "on-surface": "#131c28",
+                        "muted-text": "#5B6472",
+                        "secondary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-tabular": ["IBM Plex Mono"],
+                        "display-lg": ["IBM Plex Serif"],
+                        "headline-md": ["IBM Plex Serif"],
+                        "verdict-lg": ["IBM Plex Serif"],
+                        "label-caps": ["IBM Plex Mono"],
+                        "body-main": ["IBM Plex Sans"],
+                        "body-sm": ["IBM Plex Sans"],
+                        "verdict-xl": ["IBM Plex Serif"]
+                    },
+                    "fontSize": {
+                        "data-tabular": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "verdict-lg": ["48px", { "lineHeight": "56px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-main": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "verdict-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-paper-bg text-on-surface font-body-main antialiased min-h-screen flex flex-col pt-16 md:pl-64">
+<!-- TopAppBar -->
+<header class="bg-navy-ink text-on-primary font-body-main full-width top-0 border-b border-muted-text/20 flat no shadows flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50">
+<div class="flex items-center gap-stack-sm">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">CivicReloc</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="flex items-center gap-stack-sm text-on-primary-container">
+<button class="transition-colors duration-150 hover:bg-primary-fixed-variant/20 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="transition-colors duration-150 hover:bg-primary-fixed-variant/20 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+<img alt="Field Officer Profile" class="w-8 h-8 rounded-full border border-muted-text/20 object-cover" data-alt="A small, professional headshot of a field officer in a minimal, high-tech uniform against a dark, neutral background. The lighting is crisp and authoritative, fitting a government or institutional database style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjEgakDCw5c-IkyquQoOaOoFNTGsJqHj5RS5Q-2oZSjyMH-l5yiI-e6Pw8eN0fZqDDbte4fye1-IPO4cMdY6BYa3na_0gWTjGXseLvXpOipqqZV5DrwX1MB_-Mtgbt1KymdUUzFtVd4SwWEe5wSAJ7x0fQP29vpbWUxND-p7uXw-Fo0CVFOAjVuXmgP-P8aLV8haFurNQu2GI0g03jnrDKWaR2HL-kXTAjsfPBBI-SOYPYI_RmfXuZ"/>
+</div>
+</header>
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex bg-surface-container-lowest text-navy-ink font-label-caps text-label-caps docked left-0 h-full w-64 border-r border-muted-text/20 flat no shadows fixed left-0 top-16 bottom-0 flex flex-col z-40 transition-all duration-200 ease-in-out">
+<div class="p-container-padding border-b border-muted-text/20 mb-stack-md flex items-center gap-stack-sm">
+<img alt="Relocation Authority Logo" class="w-10 h-10 rounded object-cover" data-alt="A minimalist, geometric logo of a relocation authority. The logo uses deep navy and stark white colors, representing stability and official government operation in a high-contrast style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhry0JToWN8N5TXwjnP8OZ3fFoTN5168A6tVloX0HBvf2oimUTLm_Hfy66YXZ-N_VzvRWk2Si33HyytjJK7dJPOc5T3_6FAk18H5nvNZxRXQMEz0UiYvhjgIl_3xqupS_HblyviTflFgoxIbb6T__KKfbqnWkaf0zzY6l4MQb6EDG_wQcBNCCde57ZtTeRQ1I-GzLq85p06284805G-giVMyi6EiQoX-JDjU0xnN1ge4BczrFNDuAw"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-navy-ink">Disaster Ops</h2>
+<p class="text-on-surface-variant">Sector 7G</p>
+</div>
+</div>
+<ul class="flex flex-col flex-grow w-full">
+<li>
+<a class="flex items-center gap-stack-sm px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+                    Map View
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+                    Assessments
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                    Resources
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm px-container-padding py-3 text-primary border-r-4 border-primary font-bold bg-surface-container transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="gavel" data-weight="fill" style="font-variation-settings: 'FILL' 1;">gavel</span>
+                    Protocols
+                </a>
+</li>
+</ul>
+<div class="p-container-padding mt-auto border-t border-muted-text/20">
+<button class="w-full bg-navy-ink text-white font-body-main text-body-main font-semibold py-2 px-4 rounded transition-colors hover:bg-primary mb-stack-md">
+                Report Hazard
+            </button>
+<ul class="flex flex-col w-full">
+<li>
+<a class="flex items-center gap-stack-sm py-2 text-on-surface-variant hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                        Settings
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-stack-sm py-2 text-on-surface-variant hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                        Log Out
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-container-padding max-w-[1120px] mx-auto w-full pb-stack-lg">
+<!-- Page Header -->
+<header class="mb-stack-lg border-b border-muted-text/20 pb-stack-md">
+<h1 class="font-display-lg text-display-lg text-navy-ink mb-unit">Operational Protocols &amp; Safety Guidelines</h1>
+<p class="font-body-main text-body-main text-on-surface-variant">Mandatory procedures and reference documentation for Sector 7G field operations.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Core Protocols -->
+<div class="lg:col-span-8 flex flex-col gap-stack-md">
+<!-- Section 1: Relocation Protocol -->
+<section class="bg-surface-container-lowest border border-muted-text/20 rounded p-container-padding">
+<div class="flex items-center justify-between mb-stack-md border-b border-muted-text/20 pb-unit">
+<h2 class="font-headline-md text-headline-md text-navy-ink flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-hazard-red">warning</span>
+                            Relocation Protocol 12-B
+                        </h2>
+<span class="bg-hazard-red/10 text-hazard-red font-label-caps text-label-caps px-2 py-1 rounded-full border border-hazard-red/20">HIGH-RISK ZONE</span>
+</div>
+<div class="space-y-stack-sm">
+<!-- Accordion Item 1 -->
+<details class="group border border-muted-text/20 rounded bg-paper-bg" open="">
+<summary class="flex justify-between items-center font-data-tabular text-data-tabular p-3 cursor-pointer list-none hover:bg-surface-container-low">
+<span>01. Perimeter Establishment</span>
+<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-3 border-t border-muted-text/20 text-body-sm font-body-sm text-on-surface-variant bg-surface-container-lowest">
+                                Secure a 500-meter perimeter around the affected zone. Deploy hazard markers and restrict civilian access immediately. Ensure all access points are monitored by authorized personnel.
+                            </div>
+</details>
+<!-- Accordion Item 2 -->
+<details class="group border border-muted-text/20 rounded bg-paper-bg">
+<summary class="flex justify-between items-center font-data-tabular text-data-tabular p-3 cursor-pointer list-none hover:bg-surface-container-low">
+<span>02. Initial Assessment &amp; Triage</span>
+<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-3 border-t border-muted-text/20 text-body-sm font-body-sm text-on-surface-variant bg-surface-container-lowest">
+                                Conduct rapid visual assessment. Classify structural integrity using standard metrics. Prioritize evacuation for individuals with medical dependencies.
+                            </div>
+</details>
+<!-- Accordion Item 3 -->
+<details class="group border border-muted-text/20 rounded bg-paper-bg">
+<summary class="flex justify-between items-center font-data-tabular text-data-tabular p-3 cursor-pointer list-none hover:bg-surface-container-low">
+<span>03. Extraction Procedures</span>
+<span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-3 border-t border-muted-text/20 text-body-sm font-body-sm text-on-surface-variant bg-surface-container-lowest">
+                                Initiate staggered extraction. Utilize designated safe routes only. Maintain continuous communication with the Strategic Hub during transport.
+                            </div>
+</details>
+</div>
+</section>
+<!-- Section 2: Communication Hierarchy -->
+<section class="bg-surface-container-lowest border border-muted-text/20 rounded p-container-padding">
+<h2 class="font-headline-md text-headline-md text-navy-ink mb-stack-md border-b border-muted-text/20 pb-unit flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-navy-ink">account_tree</span>
+                        Communication Hierarchy
+                    </h2>
+<div class="bg-paper-bg border border-muted-text/20 rounded p-stack-md relative overflow-hidden">
+<div class="absolute top-0 bottom-0 left-8 w-px bg-muted-text/30"></div>
+<div class="relative pl-12 mb-stack-md">
+<div class="absolute left-6 top-1 w-4 h-4 rounded-full bg-navy-ink border-2 border-surface-container-lowest -translate-x-1/2"></div>
+<h3 class="font-data-tabular text-data-tabular text-navy-ink">Strategic Hub Command</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Final authority on resource allocation and protocol deviation.</p>
+</div>
+<div class="relative pl-12 mb-stack-md">
+<div class="absolute left-6 top-1 w-4 h-4 rounded-full bg-surface-tint border-2 border-surface-container-lowest -translate-x-1/2"></div>
+<h3 class="font-data-tabular text-data-tabular text-navy-ink">Sector Coordinator</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manages multiple field units and relays intel to Command.</p>
+</div>
+<div class="relative pl-12">
+<div class="absolute left-6 top-1 w-4 h-4 rounded-full bg-primary-fixed border-2 border-surface-container-lowest -translate-x-1/2"></div>
+<h3 class="font-data-tabular text-data-tabular text-navy-ink">Field Officer (Active)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Direct operational execution and immediate hazard reporting.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Document Library & Quick Actions -->
+<div class="lg:col-span-4 flex flex-col gap-stack-md">
+<!-- Section 3: Document Library -->
+<section class="bg-navy-ink text-white rounded p-container-padding border border-navy-ink">
+<h2 class="font-headline-md text-headline-md text-white mb-stack-md border-b border-muted-text/30 pb-unit flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary-fixed">library_books</span>
+                        Document Library
+                    </h2>
+<ul class="flex flex-col gap-unit">
+<li>
+<a class="flex items-center justify-between p-3 border border-muted-text/30 rounded bg-inverse-surface hover:bg-surface-tint transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed">picture_as_pdf</span>
+<span class="font-body-sm text-body-sm">Flood Safety Vol. 2</span>
+</div>
+<span class="material-symbols-outlined text-muted-text group-hover:text-white transition-colors">download</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between p-3 border border-muted-text/30 rounded bg-inverse-surface hover:bg-surface-tint transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed">picture_as_pdf</span>
+<span class="font-body-sm text-body-sm">HazMat Identification</span>
+</div>
+<span class="material-symbols-outlined text-muted-text group-hover:text-white transition-colors">download</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between p-3 border border-muted-text/30 rounded bg-inverse-surface hover:bg-surface-tint transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed">picture_as_pdf</span>
+<span class="font-body-sm text-body-sm">Medical Triage Guide</span>
+</div>
+<span class="material-symbols-outlined text-muted-text group-hover:text-white transition-colors">download</span>
+</a>
+</li>
+</ul>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm full-width bottom-0 border-t border-muted-text/20 flat no shadows flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-stack-sm mt-auto z-40 md:pl-64">
+<div class="mb-2 md:mb-0">
+            © 2024 Civic Disaster Management Authority. Restricted access.
+        </div>
+<div class="flex items-center gap-stack-md font-label-caps text-label-caps font-bold">
+<a class="text-muted-text opacity-80 hover:opacity-100 hover:text-primary transition-opacity" href="#">Legal</a>
+<a class="text-muted-text opacity-80 hover:opacity-100 hover:text-primary transition-opacity" href="#">Safety Protocols</a>
+<a class="text-muted-text opacity-80 hover:opacity-100 hover:text-primary transition-opacity" href="#">Privacy Policy</a>
+<a class="text-muted-text opacity-80 hover:opacity-100 hover:text-primary transition-opacity" href="#">System Status</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Zone &amp; Relocation Assessment · SIH26191</title>
+  <meta name="description" content="Disaster management tool for Red Zone & Relocation Assessment in Majuli, Assam. SIH26191.">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <!-- Leaflet.markercluster (for national-scale marker rendering) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Demo banner */
+    .demo-banner {
+      background: #FFF8E1;
+      border-bottom: 1px solid #FFCC02;
+      color: #5A4000;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      padding: 7px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .demo-banner .material-symbols-outlined { font-size: 15px; color: #C07000; flex-shrink: 0; }
+    /* Form feedback */
+    .form-feedback {
+      display: none;
+      font-size: 0.82rem;
+      padding: 10px 14px;
+      border-radius: 5px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .form-feedback--error   { background: #FBEAEA; color: #C0392B; border: 1px solid rgba(192,57,43,0.25); }
+    .form-feedback--success { background: #E9F4EE; color: #1F7A5C; border: 1px solid rgba(31,122,92,0.25); }
+    .geocode-row { display: flex; gap: 8px; align-items: flex-end; }
+    .geocode-row .field-input { flex: 1; }
+    .btn-geocode {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #1F7A5C; color: #fff;
+      border: none; border-radius: 5px;
+      padding: 10px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-geocode:hover { background: #155c44; }
+    .btn-geocode:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-geocode .material-symbols-outlined { font-size: 15px; }
+
+    /* Onboarding / "how this works" panel */
+    .howto-panel {
+      background: #EFF4FF;
+      border: 1px solid #C9D9F5;
+      border-radius: 8px;
+      margin: 12px 0 0;
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #0F1B2D;
+      max-width: 1120px;
+    }
+    .howto-panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .howto-panel-head strong { font-family: 'IBM Plex Serif', serif; font-size: 0.95rem; }
+    .howto-close { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #5B6472; line-height: 1; }
+    .howto-steps { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+    .howto-step { display: flex; gap: 8px; align-items: flex-start; }
+    .howto-step-num {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      background: #0F1B2D; color: #fff; font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .howto-reopen {
+      display: none; align-items: center; gap: 5px;
+      background: none; border: 1px solid #D8DDE3; border-radius: 5px;
+      padding: 5px 10px; margin: 10px 0 0; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+      color: #5B6472; letter-spacing: 0.03em;
+    }
+    .howto-reopen .material-symbols-outlined { font-size: 14px; }
+
+    /* Tab descriptions */
+    .tab-desc {
+      font-size: 0.78rem;
+      color: #5B6472;
+      margin: 8px 0 0;
+      line-height: 1.5;
+    }
+
+    /* Score legend tooltip-ish inline help */
+    .score-help {
+      font-size: 0.72rem; color: #5B6472; margin-bottom: 12px;
+      background: #F7F8FA; border: 1px solid #E1E4EA; border-radius: 6px;
+      padding: 8px 12px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     TOP APP BAR
+══════════════════════════════════════ -->
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="topbar-icon-btn mobile-menu-btn" id="menu-toggle" aria-label="Toggle navigation menu" title="Menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="topbar-brand">
+      <span class="material-symbols-outlined topbar-icon">account_balance</span>
+      <span class="topbar-title">FIELD OPS: DISASTER MGMT</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <select id="region-select" title="Switch dataset/region" style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:600;letter-spacing:0.03em;border:1px solid #D8DDE3;border-radius:5px;padding:6px 10px;background:#fff;color:#0F1B2D;cursor:pointer;">
+      <option value="majuli">Majuli, Assam (pilot)</option>
+      <option value="national">All-India — real data (53,223 villages)</option>
+    </select>
+    <span class="topbar-badge">SIH26191</span>
+    <button class="topbar-icon-btn" id="topbar-notif-btn" aria-label="Notifications" title="System status">
+      <span class="material-symbols-outlined">notifications</span>
+    </button>
+    <div class="topbar-avatar" title="Field Operator">
+      <span class="material-symbols-outlined">person</span>
+    </div>
+  </div>
+</header>
+
+<!-- DEMO DATA DISCLAIMER BANNER (text swapped per-region by app.js) -->
+<div class="demo-banner" id="demo-banner" role="alert">
+  <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">info</span>
+  <strong id="demo-banner-strong">DEMO DATA — NOT FOR OFFICIAL USE.</strong>&nbsp;<span id="demo-banner-text">Hazard polygon is hand-digitised (Majuli). Population figures are Census estimates. Do not use for real emergency decisions.</span>
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:#5A4000;line-height:1;padding:0 2px;" title="Dismiss">&times;</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SHELL — sidebar + main
+══════════════════════════════════════ -->
+<div class="sidenav-backdrop" id="sidenav-backdrop"></div>
+<div class="shell">
+
+  <!-- ── SIDE NAVIGATION ── -->
+  <nav class="sidenav" id="sidenav">
+    <div class="sidenav-header">
+      <div class="sidenav-hub">STRATEGIC HUB</div>
+    </div>
+
+    <div class="sidenav-nav">
+      <a class="nav-item" id="nav-map" href="#" data-tab="map">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">map</span>
+        <span>Map View</span>
+      </a>
+      <a class="nav-item" id="nav-assessment" href="#" data-tab="assessment">
+        <span class="material-symbols-outlined">assignment_turned_in</span>
+        <span>Assessments</span>
+      </a>
+      <a class="nav-item" href="#" data-tab="add">
+        <span class="material-symbols-outlined">add_location_alt</span>
+        <span>Add Settlement</span>
+      </a>
+    </div>
+
+    <!-- Settlement quick-list in sidebar -->
+    <div class="sidenav-section-label">TARGET SETTLEMENTS</div>
+    <div class="sidenav-settlement-list" id="sidenav-settlements"></div>
+
+    <div class="sidenav-section-label" style="margin-top:16px;">MORE</div>
+    <div class="sidenav-nav">
+      <a class="nav-item" href="/protocols">
+        <span class="material-symbols-outlined">gavel</span>
+        <span>Protocols & Guidelines</span>
+      </a>
+      <a class="nav-item" href="/resources">
+        <span class="material-symbols-outlined">inventory_2</span>
+        <span>Resource Allocation</span>
+      </a>
+      <a class="nav-item" href="/">
+        <span class="material-symbols-outlined">search</span>
+        <span>Check My Village</span>
+      </a>
+    </div>
+
+    <div class="sidenav-footer">
+      <button id="reset-btn" class="btn-outline w-full">
+        <span class="material-symbols-outlined btn-icon">restart_alt</span>
+        Reset to Majuli Pilot
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content">
+
+    <!-- Context sub-header -->
+    <div class="content-header">
+      <div class="content-header-inner">
+        <h1 class="page-title">Red Zone &amp; Relocation Assessment</h1>
+        <p class="page-subtitle" id="page-subtitle">Pilot area: Majuli, Assam — Brahmaputra floodplain</p>
+
+        <!-- Tabs -->
+        <div class="tabs" id="main-tabs">
+          <button class="tab active" data-tab="map" id="tab-btn-map">MAP</button>
+          <button class="tab" data-tab="assessment" id="tab-btn-assessment">ASSESSMENT</button>
+          <button class="tab" data-tab="add" id="tab-btn-add">ADD SETTLEMENT</button>
+        </div>
+      </div>
+      <p class="tab-desc" id="tab-desc">See every settlement on the map. Red shaded areas are real flood-hazard zones — click any marker for its priority score.</p>
+
+      <!-- HOW THIS WORKS — first-time onboarding panel (dismissible, remembered via localStorage).
+           Lives inside .content-header (part of the normal main-content flow) rather than as a
+           top-level page element, since this layout's sidenav/topbar rely on fixed+sticky
+           positioning math that assumes nothing extra sits between the topbar and .shell. -->
+      <div class="howto-panel" id="howto-panel">
+        <div class="howto-panel-head">
+          <strong>How this dashboard works</strong>
+          <button class="howto-close" id="howto-close" title="Dismiss">&times;</button>
+        </div>
+        <div class="howto-steps">
+          <div class="howto-step"><span class="howto-step-num">1</span><span><strong>MAP</strong> — see every settlement plotted on a map, with real flood-hazard zones shaded in red. Click a marker for details.</span></div>
+          <div class="howto-step"><span class="howto-step-num">2</span><span><strong>ASSESSMENT</strong> — a ranked list: which settlements are highest priority for relocation, based on hazard exposure + overcrowding.</span></div>
+          <div class="howto-step"><span class="howto-step-num">3</span><span><strong>ADD SETTLEMENT</strong> — manually add any village (real or hypothetical) and see how it scores against the same hazard zones.</span></div>
+          <div class="howto-step"><span class="howto-step-num">→</span><span>Use the dropdown top-right to switch between the small precise <strong>Majuli pilot</strong> and the large <strong>All-India</strong> dataset.</span></div>
+        </div>
+      </div>
+      <button class="howto-reopen" id="howto-reopen">
+        <span class="material-symbols-outlined">help</span> How this works
+      </button>
+    </div>
+
+    <!-- ─── MAP TAB ─── -->
+    <section class="tab-panel active" id="panel-map">
+      <!-- Legend row -->
+      <div class="legend-bar">
+        <div class="legend-item"><span class="legend-dot" style="background:#C0392B"></span>High priority</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#D98324"></span>Medium priority</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#1F7A5C"></span>Low priority</div>
+        <div class="legend-item legend-hazard">
+          <span class="material-symbols-outlined" style="font-size:14px;color:#C0392B;vertical-align:middle">warning</span>
+          Shaded area = hazard zone
+        </div>
+      </div>
+      <div id="map"></div>
+    </section>
+
+    <!-- ─── ASSESSMENT TAB ─── -->
+    <section class="tab-panel" id="panel-assessment">
+      <div class="panel-body">
+        <div class="score-help">
+          <strong>How to read this:</strong> Each settlement gets a <strong>Priority Score out of 6</strong>, combining hazard severity (is it in a flood zone, and how badly hit historically?) with overcrowding (population vs. land area). Higher score = more urgent for relocation review. <strong>HIGH</strong> = act soon, <strong>MEDIUM</strong> = monitor, <strong>LOW</strong> = not currently flagged.
+        </div>
+        <div id="assessment-cards"></div>
+        <p class="footnote" id="assessment-footnote">
+          Density thresholds sourced from URDPFI 2014/2015 guidelines (small-town, plain-area norm: 75–125 persons/hectare).
+          Hazard zone is a demo polygon for Majuli, Assam.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── ADD SETTLEMENT TAB ─── -->
+    <section class="tab-panel" id="panel-add">
+      <div class="panel-body panel-body--narrow">
+        <div class="form-card">
+          <div class="form-card-header">
+            <span class="material-symbols-outlined" style="color:#0F1B2D">add_location_alt</span>
+            <h2 class="form-card-title">Add a Settlement</h2>
+          </div>
+          <p class="form-hint">Enter settlement details to assess it against the Majuli hazard zone.</p>
+
+          <form id="add-form" class="rz-form" autocomplete="off">
+            <div id="form-feedback" class="form-feedback" style="display:none"></div>
+            <div class="field-group">
+              <label class="field-label" for="f-name">Settlement Name</label>
+              <div class="geocode-row">
+                <input class="field-input" type="text" id="f-name" placeholder="e.g. Kamalabari Gaon" required>
+                <button type="button" class="btn-geocode" id="f-geocode-btn" title="Auto-fill lat/lon from OpenStreetMap (Nominatim)">
+                  <span class="material-symbols-outlined btn-icon" style="font-size:15px">my_location</span>
+                  Look up coords
+                </button>
+              </div>
+              <p style="font-size:0.72rem;color:#5B6472;margin-top:4px">Type a name and click "Look up coords" to auto-fill lat/lon from OpenStreetMap.</p>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label" for="f-lat">Latitude</label>
+                <input class="field-input font-mono" type="number" step="0.0001" id="f-lat" value="26.99" required>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="f-lon">Longitude</label>
+                <input class="field-input font-mono" type="number" step="0.0001" id="f-lon" value="94.19" required>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label" for="f-pop">Population</label>
+                <input class="field-input font-mono" type="number" id="f-pop" value="1000" min="1" required>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="f-area">Area (hectares)</label>
+                <input class="field-input font-mono" type="number" step="0.5" id="f-area" value="10" min="0.1" required>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="f-terrain">Terrain Type</label>
+              <select class="field-input" id="f-terrain">
+                <option value="plain">Plain</option>
+                <option value="hill">Hill</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">
+                <span class="material-symbols-outlined btn-icon">add_location_alt</span>
+                Add Settlement
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="bottom-nav" id="bottom-nav">
+  <a class="bottom-nav-item active" data-tab="map" href="#">
+    <span class="material-symbols-outlined">map</span>
+    <span>Map</span>
+  </a>
+  <a class="bottom-nav-item" data-tab="assessment" href="#">
+    <span class="material-symbols-outlined">assignment_turned_in</span>
+    <span>Assess</span>
+  </a>
+  <a class="bottom-nav-item" data-tab="add" href="#">
+    <span class="material-symbols-outlined">add_location_alt</span>
+    <span>Add</span>
+  </a>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

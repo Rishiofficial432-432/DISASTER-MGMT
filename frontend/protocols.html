@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocols &amp; Guidelines · SIH26191</title>
+  <meta name="description" content="Operational relocation protocols and official reference documents — SIH26191">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .proto-layout { max-width: 860px; margin: 0 auto; padding: 36px 24px 80px; display: flex; flex-direction: column; gap: 24px; }
+    .page-hero { border-bottom: 2px solid var(--navy-ink); padding-bottom: 20px; }
+    .page-hero h1 { font-family: 'IBM Plex Serif', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--navy-ink); letter-spacing: -0.02em; margin-bottom: 8px; }
+    .page-hero p  { font-size: 0.92rem; color: var(--muted-text); line-height: 1.6; }
+    .proto-section { background: var(--surface-container-lowest); border: 1px solid rgba(91,100,114,0.2); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .proto-section-header { display: flex; align-items: center; gap: 10px; padding: 16px 24px; background: var(--surface-container-low); border-bottom: 1px solid rgba(91,100,114,0.15); font-family: 'IBM Plex Serif', serif; font-size: 1.05rem; font-weight: 600; color: var(--navy-ink); }
+    .proto-section-header .material-symbols-outlined { font-size: 22px; }
+    .proto-section-body { padding: 24px; }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .step-list li { display: flex; gap: 16px; font-size: 0.9rem; line-height: 1.65; }
+    .step-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; font-weight: 700; color: var(--navy-ink); background: var(--surface-container); border: 1px solid rgba(91,100,114,0.2); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .bullet-list li { display: flex; gap: 10px; font-size: 0.9rem; color: var(--muted-text); line-height: 1.65; }
+    .bullet-list li::before { content: '—'; color: var(--outline-variant); flex-shrink: 0; }
+    .ref-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .ref-link { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border: 1px solid rgba(91,100,114,0.2); border-radius: 6px; font-size: 0.88rem; color: var(--navy-ink); text-decoration: none; background: var(--surface-container-low); transition: background 0.15s, border-color 0.15s; }
+    .ref-link:hover { background: var(--surface-container); border-color: var(--navy-ink); }
+    .ref-link .material-symbols-outlined { font-size: 18px; color: var(--muted-text); flex-shrink: 0; }
+    .score-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .score-table th { text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-text); padding: 8px 12px; border-bottom: 1px solid rgba(91,100,114,0.2); }
+    .score-table td { padding: 10px 12px; border-bottom: 1px solid rgba(91,100,114,0.1); vertical-align: middle; }
+    .score-table tr:last-child td { border-bottom: none; }
+    .score-table .score-chip { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; }
+    .demo-banner { background: #FFF8E1; border-bottom: 1px solid #FFCC02; color: #5A4000; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.05em; padding: 7px 20px; display: flex; align-items: center; gap: 8px; }
+    .demo-banner strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="material-symbols-outlined topbar-icon" style="font-variation-settings:'FILL' 1">account_balance</span>
+    FIELD OPS: DISASTER MGMT
+  </div>
+  <div class="topbar-right" style="display:flex;align-items:center;gap:20px;">
+    <nav style="display:flex;gap:20px;">
+      <a href="/dashboard" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none">Dashboard</a>
+      <a href="/protocols"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:#fff;text-decoration:none;font-weight:600">Protocols</a>
+      <a href="/resources"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none">Resources</a>
+    </nav>
+    <a href="/" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none">← Village Search</a>
+  </div>
+</header>
+
+<!-- DEMO DATA DISCLAIMER BANNER -->
+<div class="demo-banner" id="demo-banner" role="alert">
+  <span class="material-symbols-outlined" style="font-size:15px;color:#C07000;font-variation-settings:'FILL' 1">info</span>
+  <strong>DEMO DATA — NOT FOR OFFICIAL USE.</strong>&nbsp; All assessment data is illustrative. Protocols listed are real government documents — verify directly with NDMA before field use.
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:#5A4000;line-height:1;padding:0 2px;" title="Dismiss">&times;</button>
+</div>
+
+<main class="proto-layout">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <h1>Protocols &amp; Safety Guidelines</h1>
+    <p>Reference procedures for relocation prioritisation and field response, sourced from official Indian government disaster-management documents.</p>
+  </div>
+
+  <!-- SCORING METHODOLOGY -->
+  <div class="proto-section">
+    <div class="proto-section-header">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;color:#0F1B2D">calculate</span>
+      Priority Scoring Methodology
+    </div>
+    <div class="proto-section-body">
+      <p style="font-size:0.88rem;color:var(--muted-text);margin-bottom:16px;line-height:1.7">
+        Each settlement receives a score 0–6 combining hazard exposure (0–4 pts) and population density tier (0–2 pts).
+        High scores indicate the most urgent relocation need.
+      </p>
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Value</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Hazard severity</td><td>High</td><td><span class="score-chip" style="background:#FBEAEA;color:#C0392B">+4</span></td></tr>
+          <tr><td>Hazard severity</td><td>Medium</td><td><span class="score-chip" style="background:#FCF1E3;color:#D98324">+2</span></td></tr>
+          <tr><td>Hazard severity</td><td>Low / None</td><td><span class="score-chip" style="background:#E9F4EE;color:#1F7A5C">+0</span></td></tr>
+          <tr><td>Density tier (URDPFI)</td><td>High (&gt;125 pph, plain)</td><td><span class="score-chip" style="background:#FBEAEA;color:#C0392B">+2</span></td></tr>
+          <tr><td>Density tier (URDPFI)</td><td>Medium (75–125 pph)</td><td><span class="score-chip" style="background:#FCF1E3;color:#D98324">+1</span></td></tr>
+          <tr><td>Density tier (URDPFI)</td><td>Low (&lt;75 pph)</td><td><span class="score-chip" style="background:#E9F4EE;color:#1F7A5C">+0</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RELOCATION PROTOCOL -->
+  <div class="proto-section">
+    <div class="proto-section-header">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;color:#C0392B">emergency</span>
+      Relocation Decision Protocol
+    </div>
+    <div class="proto-section-body">
+      <ol class="step-list">
+        <li>
+          <span class="step-num">1</span>
+          <span>Identify settlements inside a mapped hazard zone using the <strong>point-in-polygon</strong> exposure check. Any settlement inside a high-severity zone is automatically high priority.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span>Classify residential density against <strong>URDPFI 2014/2015</strong> norms (75–125 persons/hectare for small-town, plain terrain). Hill terrain carries an additional 0.5× multiplier.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span>Combine hazard severity and density tier into a <strong>priority score (0–6)</strong>. Settlements scoring ≥ 4 are flagged as high priority.</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span>Review high-priority settlements first for detailed field assessment. <strong>Do not initiate relocation</strong> based solely on this tool — verify with district disaster management authorities.</span>
+        </li>
+        <li>
+          <span class="step-num">5</span>
+          <span>Document all field findings and update the settlement record with drone-measured areas before the final report.</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- COMMS STRATEGY -->
+  <div class="proto-section">
+    <div class="proto-section-header">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;color:#D98324">campaign</span>
+      Communication Strategy
+    </div>
+    <div class="proto-section-body">
+      <ul class="bullet-list">
+        <li>Use plain-language verdicts (<strong>URGENT / WATCH / SAFE</strong>) for field officers and residents — the "Check My Village" tool is designed for this.</li>
+        <li>Always disclose data limitations to end users. This prototype uses <strong>demonstration hazard data</strong>, not a live NDMA/NRSC feed.</li>
+        <li>Escalate high-priority settlements to <strong>district disaster management authorities</strong> for verification before any action.</li>
+        <li>Maintain a log of all searches and verdicts served for accountability and audit trail.</li>
+        <li>Provide results in the local language (Assamese) for affected communities in production deployment.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- REFERENCE DOCS -->
+  <div class="proto-section">
+    <div class="proto-section-header">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">menu_book</span>
+      Reference Documents
+    </div>
+    <div class="proto-section-body">
+      <ul class="ref-list">
+        <li>
+          <a class="ref-link" href="https://ndma.gov.in/images/guidelines/flood.pdf" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined">open_in_new</span>
+            NDMA — Management of Floods (2008)
+          </a>
+        </li>
+        <li>
+          <a class="ref-link" href="https://nidm.gov.in/pdf/guidelines/new/management_urban_flooding.pdf" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined">open_in_new</span>
+            NDMA — Management of Urban Flooding (2010)
+          </a>
+        </li>
+        <li>
+          <a class="ref-link" href="https://nidm.gov.in/pdf/guidelines/new/landslidessnowavalanches.pdf" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined">open_in_new</span>
+            NDMA — Landslides &amp; Snow Avalanches (2009)
+          </a>
+        </li>
+        <li>
+          <a class="ref-link" href="https://mohua.gov.in/upload/uploadfiles/files/URDPFI%20Guidelines%20Vol%20I(2).pdf" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined">open_in_new</span>
+            URDPFI Guidelines Vol I — MoHUA (2014/2015)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer style="background:var(--navy-ink);color:rgba(255,255,255,0.5);padding:14px 24px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:auto;">
+  SIH26191 · Red Zone &amp; Relocation Assessment · Demo data — not for official use
+</footer>
+</body>
+</html>

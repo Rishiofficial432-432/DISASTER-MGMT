@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Field Ops: Disaster Management - Assessments</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#410000",
+                      "secondary-fixed-dim": "#c5c7c8",
+                      "on-primary-container": "#79849b",
+                      "primary-fixed-dim": "#bbc7df",
+                      "surface-tint": "#535f74",
+                      "navy-ink": "#0F1B2D",
+                      "surface-dim": "#d2daeb",
+                      "primary-container": "#101c2e",
+                      "on-tertiary-fixed-variant": "#8e130c",
+                      "surface": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "background": "#f8f9ff",
+                      "on-surface-variant": "#44474c",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary-fixed": "#101c2e",
+                      "surface-variant": "#dae3f4",
+                      "on-primary-fixed-variant": "#3c475b",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e0e9f9",
+                      "priority-amber": "#D98324",
+                      "secondary": "#5c5f60",
+                      "on-secondary-container": "#606365",
+                      "muted-text": "#5B6472",
+                      "on-tertiary-container": "#e45342",
+                      "primary": "#000000",
+                      "inverse-primary": "#bbc7df",
+                      "outline-variant": "#c5c6cd",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#dee0e2",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#e1e2e4",
+                      "paper-bg": "#F7F8FA",
+                      "surface-container-low": "#eff4ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#410000",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#444749",
+                      "hazard-red": "#C0392B",
+                      "on-secondary-fixed": "#191c1e",
+                      "tertiary-fixed": "#ffdad5",
+                      "on-surface": "#131c28",
+                      "tertiary-fixed-dim": "#ffb4a9",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-background": "#131c28",
+                      "outline": "#75777d",
+                      "safe-teal": "#1F7A5C",
+                      "primary-fixed": "#d7e3fc",
+                      "tertiary": "#000000",
+                      "inverse-surface": "#28313d",
+                      "surface-container-highest": "#dae3f4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "gutter": "16px",
+                      "stack-sm": "8px",
+                      "container-padding": "24px",
+                      "stack-lg": "32px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "IBM Plex Serif"
+                      ],
+                      "data-tabular": [
+                              "IBM Plex Mono"
+                      ],
+                      "label-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-main": [
+                              "IBM Plex Sans"
+                      ],
+                      "display-lg": [
+                              "IBM Plex Serif"
+                      ],
+                      "verdict-lg": [
+                              "IBM Plex Serif"
+                      ],
+                      "verdict-xl": [
+                              "IBM Plex Serif"
+                      ],
+                      "body-sm": [
+                              "IBM Plex Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-tabular": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-main": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "verdict-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "verdict-xl": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        body {
+            background-color: #F7F8FA; /* paper-bg */
+        }
+        
+        /* High-contrast table styling */
+        .dossier-table th {
+            background-color: #0F1B2D; /* navy-ink */
+            color: #ffffff;
+            border: 1px solid #0F1B2D;
+        }
+        .dossier-table td {
+            border: 1px solid rgba(91, 100, 114, 0.2); /* muted-text/20 */
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-navy-ink text-on-primary font-headline-md text-headline-md docked full-width top-0 border-b border-muted-text/20 flat no shadows flex justify-between items-center w-full px-container-padding h-16 shrink-0 z-50">
+<div class="flex items-center gap-stack-md cursor-pointer active:opacity-80 transition-colors">
+<span class="material-symbols-outlined text-[28px]" data-icon="account_balance">account_balance</span>
+<span class="font-display-lg text-[24px] font-bold text-on-primary tracking-tight">FIELD OPS: DISASTER MGMT</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="font-label-caps text-label-caps text-on-primary-container hidden md:block">APEX SYSTEM</div>
+<button aria-label="Notifications" class="p-2 hover:bg-primary-container transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-muted-text/30 flex items-center justify-center cursor-pointer ml-2">
+<span class="material-symbols-outlined text-navy-ink text-sm" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- NavigationDrawer -->
+<aside class="bg-surface-container-lowest text-primary font-label-caps text-label-caps docked left-0 h-full w-[300px] border-r border-muted-text/20 flat no shadows hidden md:flex flex-col h-screen sticky top-0 shrink-0 overflow-y-auto">
+<div class="p-container-padding pb-stack-md border-b border-muted-text/20">
+<h2 class="font-headline-md text-headline-md text-navy-ink font-semibold">STRATEGIC HUB</h2>
+</div>
+<nav class="flex-1 py-stack-md flex flex-col gap-1 px-stack-sm">
+<!-- Navigation Items -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-muted-text hover:text-navy-ink hover:bg-surface-container-high transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map View</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md bg-primary-container text-on-primary-container font-bold transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<span>Assessments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-muted-text hover:text-navy-ink hover:bg-surface-container-high transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Resources</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-muted-text hover:text-navy-ink hover:bg-surface-container-high transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Protocols</span>
+</a>
+<div class="mt-stack-lg mb-stack-sm px-4">
+<div class="text-xs text-muted-text uppercase tracking-wider mb-2">Target Settlements</div>
+<div class="flex flex-col gap-1 border-l-2 border-muted-text/20 ml-2 pl-2">
+<div class="px-2 py-1.5 text-muted-text hover:text-navy-ink cursor-pointer font-data-tabular text-data-tabular">MJ-012</div>
+<div class="px-2 py-1.5 text-hazard-red font-bold cursor-pointer font-data-tabular text-data-tabular bg-error-container/30 rounded border border-hazard-red/20">MJ-014 (Critical)</div>
+<div class="px-2 py-1.5 text-muted-text hover:text-navy-ink cursor-pointer font-data-tabular text-data-tabular">MJ-018</div>
+</div>
+</div>
+</nav>
+<div class="p-stack-md border-t border-muted-text/20">
+<button class="w-full py-2 px-4 border border-navy-ink text-navy-ink rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="search">search</span>
+                    Return to Village Search
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-paper-bg flex flex-col">
+<div class="flex-1 p-container-padding pb-stack-lg max-w-[1120px] w-full mx-auto">
+<!-- Page Header -->
+<div class="mb-stack-lg border-b-2 border-navy-ink pb-stack-sm">
+<h1 class="font-headline-md text-[32px] font-semibold text-navy-ink tracking-tight mb-2">Red Zone &amp; Relocation Assessment</h1>
+<p class="font-body-main text-body-main text-muted-text">Comprehensive risk analysis and structured relocation protocols.</p>
+</div>
+<!-- Content Tabs -->
+<div class="flex border-b border-muted-text/20 mb-stack-lg">
+<button class="px-6 py-3 font-label-caps text-label-caps text-muted-text hover:text-navy-ink transition-colors">MAP</button>
+<button class="px-6 py-3 font-label-caps text-label-caps text-navy-ink font-bold border-b-2 border-navy-ink">ASSESSMENT</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Critical Data & Tables -->
+<div class="lg:col-span-8 flex flex-col gap-stack-lg">
+<!-- Critical Verdict Card -->
+<div class="bg-surface-container-lowest border-2 border-hazard-red p-container-padding relative overflow-hidden shadow-sm">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error-container opacity-20 -mr-10 -mt-10 rounded-full blur-xl"></div>
+<div class="flex justify-between items-start mb-stack-md">
+<div class="font-verdict-lg text-[40px] font-bold text-hazard-red leading-tight flex items-center gap-3">
+<span class="material-symbols-outlined text-[48px]" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                    MANDATORY EVAC
+                                </div>
+<div class="bg-navy-ink text-white px-3 py-1 font-label-caps text-label-caps rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                                    MJ-014
+                                </div>
+</div>
+<div class="grid grid-cols-2 gap-stack-md mt-stack-md">
+<div class="border border-muted-text/20 p-stack-md bg-paper-bg">
+<div class="font-label-caps text-label-caps text-muted-text mb-1">Flood Risk Score</div>
+<div class="font-data-tabular text-[32px] font-semibold text-navy-ink">94<span class="text-lg text-muted-text font-normal">/100</span></div>
+</div>
+<div class="border border-muted-text/20 p-stack-md bg-paper-bg">
+<div class="font-label-caps text-label-caps text-muted-text mb-1">Est. Relocation Time</div>
+<div class="font-data-tabular text-[32px] font-semibold text-hazard-red">48 <span class="text-lg font-normal">Hrs</span></div>
+</div>
+</div>
+<div class="mt-stack-md pt-stack-sm border-t border-hazard-red/20 flex justify-end">
+<button class="bg-navy-ink text-white px-6 py-2 font-label-caps text-label-caps rounded flex items-center gap-2 hover:bg-primary-container transition-colors shadow-sm">
+                                    INITIATE PROTOCOL 12-B
+                                    <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-muted-text/20 shadow-sm">
+<div class="px-container-padding py-stack-sm border-b border-muted-text/20 bg-surface-container flex justify-between items-center">
+<h3 class="font-headline-md text-[18px] font-semibold text-navy-ink">HISTORICAL FLOOD DATA (MAJULI)</h3>
+<span class="material-symbols-outlined text-muted-text" data-icon="history">history</span>
+</div>
+<div class="overflow-x-auto p-4">
+<table class="w-full text-left border-collapse dossier-table font-data-tabular text-data-tabular">
+<thead>
+<tr>
+<th class="p-3 font-semibold">Year</th>
+<th class="p-3 font-semibold">Peak Level (m)</th>
+<th class="p-3 font-semibold">Impact Areas</th>
+<th class="p-3 font-semibold">Duration (Days)</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<tr class="hover:bg-surface-container-low">
+<td class="p-3 border-b border-muted-text/20">2023</td>
+<td class="p-3 border-b border-muted-text/20 text-hazard-red font-semibold">87.4</td>
+<td class="p-3 border-b border-muted-text/20">MJ-012, MJ-014, MJ-022</td>
+<td class="p-3 border-b border-muted-text/20">14</td>
+</tr>
+<tr class="hover:bg-surface-container-low">
+<td class="p-3 border-b border-muted-text/20">2022</td>
+<td class="p-3 border-b border-muted-text/20 text-priority-amber font-semibold">86.2</td>
+<td class="p-3 border-b border-muted-text/20">MJ-014, MJ-018</td>
+<td class="p-3 border-b border-muted-text/20">9</td>
+</tr>
+<tr class="hover:bg-surface-container-low">
+<td class="p-3 border-b border-muted-text/20">2021</td>
+<td class="p-3 border-b border-muted-text/20">85.5</td>
+<td class="p-3 border-b border-muted-text/20">MJ-012</td>
+<td class="p-3 border-b border-muted-text/20">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: Resource Allocation -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-lowest border border-muted-text/20 p-container-padding h-full shadow-sm flex flex-col">
+<div class="flex items-center gap-2 mb-stack-md pb-stack-sm border-b border-muted-text/20">
+<span class="material-symbols-outlined text-navy-ink" data-icon="medical_services">medical_services</span>
+<h3 class="font-headline-md text-[18px] font-semibold text-navy-ink">RESOURCE ALLOCATION</h3>
+</div>
+<div class="flex flex-col gap-stack-md flex-1">
+<!-- Resource Item 1 -->
+<div class="border border-muted-text/20 p-stack-sm bg-surface-container-low">
+<div class="flex justify-between items-center mb-2">
+<div class="font-label-caps text-label-caps font-semibold text-navy-ink">Medical Units</div>
+<div class="px-2 py-0.5 bg-priority-amber/20 text-priority-amber border border-priority-amber/30 rounded font-data-tabular text-[10px] uppercase">Strained</div>
+</div>
+<div class="flex items-end gap-2">
+<div class="font-data-tabular text-[24px] font-semibold">4<span class="text-sm text-muted-text font-normal">/10</span></div>
+<div class="text-xs text-muted-text pb-1">Available locally</div>
+</div>
+<div class="w-full bg-surface-variant h-1.5 mt-2 rounded-full overflow-hidden">
+<div class="bg-priority-amber h-full w-[40%]"></div>
+</div>
+</div>
+<!-- Resource Item 2 -->
+<div class="border border-muted-text/20 p-stack-sm bg-surface-container-low">
+<div class="flex justify-between items-center mb-2">
+<div class="font-label-caps text-label-caps font-semibold text-navy-ink">Transport Vehicles</div>
+<div class="px-2 py-0.5 bg-safe-teal/20 text-safe-teal border border-safe-teal/30 rounded font-data-tabular text-[10px] uppercase">Ready</div>
+</div>
+<div class="flex items-end gap-2">
+<div class="font-data-tabular text-[24px] font-semibold">12<span class="text-sm text-muted-text font-normal">/15</span></div>
+<div class="text-xs text-muted-text pb-1">Pre-staged</div>
+</div>
+<div class="w-full bg-surface-variant h-1.5 mt-2 rounded-full overflow-hidden">
+<div class="bg-safe-teal h-full w-[80%]"></div>
+</div>
+</div>
+<div class="mt-auto pt-stack-md">
+<button class="w-full py-2 bg-surface-container border border-muted-text/30 text-navy-ink font-label-caps text-label-caps rounded hover:bg-surface-variant transition-colors">
+                                        REQUEST REINFORCEMENTS
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-paper-bg text-muted-text font-data-tabular text-data-tabular full-width border-t border-hazard-red/30 bg-on-tertiary-fixed-variant/5 flat w-full py-stack-md px-container-padding flex flex-col md:flex-row justify-between items-center text-center mt-auto">
+<div class="font-label-caps text-label-caps text-hazard-red font-bold mb-2 md:mb-0">
+                    OFFICIAL GOVERNMENT DOSSIER - CONFIDENTIAL
+                </div>
+<div class="flex gap-stack-md">
+<a class="text-muted-text hover:text-hazard-red underline transition-colors" href="#">Protocol 12-B</a>
+<a class="text-muted-text hover:text-hazard-red underline transition-colors" href="#">Hazard Disclaimer</a>
+</div>
+</footer>
+</main>
+</div>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="bg-surface-container-highest text-navy-ink font-label-caps text-label-caps docked full-width bottom-0 z-50 border-t border-muted-text/20 shadow-sm md:hidden fixed bottom-0 w-full flex justify-around py-2">
+<a class="flex flex-col items-center justify-center text-muted-text scale-95 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span>Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-muted-text scale-95 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="location_city">location_city</span>
+<span class="text-center leading-tight">Village<br/>Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-navy-ink text-white rounded-xl px-4 py-1 scale-95 active:scale-90 transition-transform w-24" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="assignment_turned_in" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<span>Assess</span>
+</a>
+</nav>
+</body></html>

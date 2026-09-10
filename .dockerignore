@@ -1,0 +1,49 @@
+# ── Virtual environments ──
+.venv/
+
+# ── Python cache ──
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+.ruff_cache/
+
+# ── Git / CI ──
+.git/
+.gitattributes
+.gitignore
+.gitlab-ci.yml
+.github/
+
+# ── Dev / tooling ──
+.DS_Store
+.streamlit/
+*.log
+logs/
+
+# ── Large data/assets that should NOT be baked into the image ──
+# model weights are mounted as Docker volumes at runtime
+model/
+cache/
+uploads/
+sample_images/
+screenshots/
+VisDrone2020-CC/
+backup/
+
+# ── Notebook / script extras ──
+*.ipynb
+*.ipynb.bak
+*.bat
+*.ps1
+
+# ── Docs / markdown (not needed at runtime) ──
+*.md
+PLAN.md
+Readme.md
+
+# ── Secrets (never bake these in) ──
+.env
+.env.*
+!.env.example

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Settlement Detail · SIH26191</title>
+  <meta name="description" content="Full settlement hazard assessment detail — SIH26191">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Page-specific extras */
+    .detail-layout { max-width: 1000px; margin: 0 auto; padding: 36px 24px 60px; display: flex; flex-direction: column; gap: 24px; }
+    .verdict-bar { border-left: 5px solid var(--outline-variant); padding: 8px 0 8px 20px; }
+    .verdict-bar.high   { border-color: var(--hazard-red); }
+    .verdict-bar.medium { border-color: var(--priority-amber); }
+    .verdict-bar.low    { border-color: var(--safe-teal); }
+    .verdict-badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 10px;
+    }
+    .verdict-badge.high   { background: var(--hazard-red-bg); color: var(--hazard-red); }
+    .verdict-badge.medium { background: var(--amber-bg);      color: var(--priority-amber); }
+    .verdict-badge.low    { background: var(--teal-bg);        color: var(--safe-teal); }
+    .detail-title {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; color: var(--navy-ink); letter-spacing: -0.02em; line-height: 1.15;
+    }
+    .detail-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted-text); margin-top: 6px; }
+    .cards-row { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 700px) { .cards-row { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .cards-row { grid-template-columns: 5fr 7fr; } }
+    .detail-card {
+      background: var(--surface-container-lowest);
+      border: 1px solid rgba(91,100,114,0.2);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .detail-card-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px;
+      background: var(--surface-container-low);
+      border-bottom: 1px solid rgba(91,100,114,0.15);
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 0.95rem; font-weight: 600; color: var(--navy-ink);
+    }
+    .detail-card-header .material-symbols-outlined { font-size: 20px; }
+    .detail-card-body { padding: 20px; }
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 10px 0; border-bottom: 1px solid rgba(91,100,114,0.1);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-key { font-size: 0.78rem; color: var(--muted-text); text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; font-weight: 600; color: var(--navy-ink); }
+    .big-readouts { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 16px; }
+    .big-readout-val { font-family: 'IBM Plex Mono', monospace; font-size: 2.2rem; font-weight: 700; color: var(--navy-ink); line-height: 1; }
+    .big-readout-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--muted-text); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+    .hazard-status { display: flex; align-items: flex-start; gap: 10px; padding: 14px; border-radius: 6px; font-size: 0.88rem; line-height: 1.6; }
+    .hazard-status.in-zone  { background: var(--hazard-red-bg); color: var(--hazard-red); border: 1px solid rgba(192,57,43,0.2); }
+    .hazard-status.out-zone { background: var(--teal-bg);       color: var(--safe-teal);   border: 1px solid rgba(31,122,92,0.2); }
+    .hazard-status .material-symbols-outlined { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .disclaimer { font-size: 0.75rem; color: var(--muted-text); padding: 10px 14px; background: var(--surface-container-low); border-radius: 5px; border: 1px solid rgba(91,100,114,0.15); line-height: 1.6; }
+    .disclaimer a { color: var(--navy-ink); }
+    .routes-card { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .routes-card { grid-template-columns: 1fr; } }
+    .route-item { border: 1px solid rgba(91,100,114,0.2); border-radius: 6px; padding: 16px; background: var(--surface-container-low); position: relative; }
+    .route-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; margin-bottom: 8px; display: inline-block; }
+    .route-label.primary   { background: var(--teal-bg); color: var(--safe-teal); }
+    .route-label.secondary { background: var(--amber-bg); color: var(--priority-amber); }
+    .route-item h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--navy-ink); margin-bottom: 4px; }
+    .route-item p  { font-size: 0.78rem; color: var(--muted-text); }
+    .back-nav { display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted-text); text-decoration: none; transition: color 0.15s; }
+    .back-nav:hover { color: var(--navy-ink); }
+    .back-nav .material-symbols-outlined { font-size: 16px; }
+    .not-found-state { text-align: center; padding: 80px 24px; }
+    .not-found-state .material-symbols-outlined { font-size: 56px; color: var(--outline-variant); margin-bottom: 16px; }
+    .not-found-state h2 { font-family: 'IBM Plex Serif', serif; font-size: 1.5rem; margin-bottom: 10px; }
+    .not-found-state p { color: var(--muted-text); font-size: 0.9rem; }
+    .demo-banner { background: #FFF8E1; border-bottom: 1px solid #FFCC02; color: #5A4000; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.05em; padding: 7px 20px; display: flex; align-items: center; gap: 8px; }
+    .demo-banner strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="material-symbols-outlined topbar-icon" style="font-variation-settings:'FILL' 1">account_balance</span>
+    FIELD OPS: DISASTER MGMT
+  </div>
+  <div class="topbar-right" style="display:flex;align-items:center;gap:20px;">
+    <nav style="display:flex;gap:20px;">
+      <a href="/dashboard" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Dashboard</a>
+      <a href="/protocols"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Protocols</a>
+      <a href="/resources"  style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);text-decoration:none;transition:color .15s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Resources</a>
+    </nav>
+    <a href="/" style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none">← Village Search</a>
+  </div>
+</header>
+
+<!-- DEMO DATA DISCLAIMER BANNER -->
+<div class="demo-banner" id="demo-banner" role="alert">
+  <span class="material-symbols-outlined" style="font-size:15px;color:#C07000;font-variation-settings:'FILL' 1">info</span>
+  <strong>DEMO DATA — NOT FOR OFFICIAL USE.</strong>&nbsp; Hazard exposure and density figures are based on demonstration data. Verify with district DDMA before any field action.
+  <button onclick="document.getElementById('demo-banner').style.display='none'" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:#5A4000;line-height:1;padding:0 2px;" title="Dismiss">&times;</button>
+</div>
+
+<div id="content" class="detail-layout">
+  <!-- filled by JS -->
+  <div class="not-found-state">
+    <span class="material-symbols-outlined">hourglass_top</span>
+    <h2>Loading…</h2>
+    <p>Fetching assessment data.</p>
+  </div>
+</div>
+
+<footer style="background:var(--navy-ink);color:rgba(255,255,255,0.5);padding:14px 24px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">
+  SIH26191 · Red Zone &amp; Relocation Assessment · Pilot: Majuli, Assam · Demo data — not for official use
+</footer>
+
+<script>
+const RANK = {
+  high:   { label: "High Priority — Urgent",  chipClass: "high",   icon: "warning" },
+  medium: { label: "Medium Priority — Watch",  chipClass: "medium", icon: "report_problem" },
+  low:    { label: "Low Priority — Safe",       chipClass: "low",    icon: "check_circle" },
+};
+
+function settlementNameFromUrl() {
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  return decodeURIComponent(parts[parts.length - 1] || "");
+}
+
+function regionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const r = params.get("region");
+  return (r === "national") ? "national" : "majuli"; // default majuli, same as backend
+}
+
+const REGION_LABELS = {
+  majuli: { pilotLine: "Pilot: Majuli, Assam", hazardNote: "Hazard zone shown is a demo polygon for Majuli, Assam (hand-digitised — not from a live NDMA/NRSC feed).", outZoneNote: "Coordinates are outside the current Majuli demo hazard polygon." },
+  national: { pilotLine: "All-India flood-history dataset — real data", hazardNote: "Hazard zone is derived from real historical flood event records (India Flood Inventory V3). Population and household figures are REAL Census 2011 data, joined by official PC11 village code.", outZoneNote: "Coordinates did not fall inside any of the mapped historical flood event polygons used for this dataset." },
+};
+
+async function load() {
+  const name = settlementNameFromUrl();
+  const region = regionFromUrl();
+  const labels = REGION_LABELS[region];
+  const el = document.getElementById("content");
+
+  let s = null;
+  try {
+    const res = await fetch(`/api/settlement-detail?name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.found) s = data.settlement;
+    }
+  } catch {}
+
+  document.querySelector("footer").textContent =
+    `SIH26191 · Red Zone & Relocation Assessment · ${labels.pilotLine} · Demo data — not for official use`;
+
+  if (!s) {
+    el.innerHTML = `
+      <div class="not-found-state">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">location_off</span>
+        <h2>Settlement not found</h2>
+        <p>"${name}" was not found in the current assessment (region: ${region}).<br>
+           It may have been removed, the name is slightly different, or it belongs to a different region — check the <code>?region=</code> link you followed.</p>
+        <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="/" class="btn-primary" style="display:inline-flex;align-items:center;gap:6px;background:#0F1B2D;color:#fff;border:none;border-radius:5px;padding:10px 20px;font-family:'IBM Plex Mono',monospace;font-size:0.73rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">
+            <span class="material-symbols-outlined" style="font-size:16px">search</span> Search Again
+          </a>
+          <a href="/dashboard" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;background:none;color:#0F1B2D;border:1px solid rgba(15,27,45,0.35);border-radius:5px;padding:10px 20px;font-family:'IBM Plex Mono',monospace;font-size:0.73rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">
+            <span class="material-symbols-outlined" style="font-size:16px">map</span> View on Map
+          </a>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const r = RANK[s.priority_rank] || RANK.low;
+  document.title = `${s.settlement_id} · SIH26191`;
+  document.getElementById("page-title").textContent = `${s.settlement_id} · SIH26191`;
+
+  const hazardBlock = s.hazard_type
+    ? `<div class="hazard-status in-zone">
+         <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">warning</span>
+         <div>
+           <strong>Inside a ${s.hazard_type} hazard zone</strong><br>
+           Severity: <strong>${s.hazard_severity}</strong> — this settlement's coordinates fall within the mapped hazard polygon.
+         </div>
+       </div>`
+    : `<div class="hazard-status out-zone">
+         <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">check_circle</span>
+         <div>
+           <strong>Not inside a mapped hazard zone</strong><br>
+           ${labels.outZoneNote}
+         </div>
+       </div>`;
+
+  el.innerHTML = `
+    <!-- BACK LINK -->
+    <a class="back-nav" href="/">
+      <span class="material-symbols-outlined">arrow_back</span>
+      Check another village
+    </a>
+
+    <!-- VERDICT HEADER -->
+    <div class="verdict-bar ${s.priority_rank}">
+      <span class="verdict-badge ${s.priority_rank}">
+        <span class="material-symbols-outlined" style="font-size:12px;margin-right:4px;font-variation-settings:'FILL' 1">${r.icon}</span>
+        ${r.label}
+      </span>
+      <h1 class="detail-title">${s.settlement_id}</h1>
+      <div class="detail-meta">
+        ${s.terrain} terrain &nbsp;·&nbsp; ${s.area_hectares} ha area &nbsp;·&nbsp; Priority score: ${s.priority_score}
+      </div>
+    </div>
+
+    <!-- MAIN DATA ROW -->
+    <div class="cards-row">
+
+      <!-- Demographics -->
+      <div class="detail-card">
+        <div class="detail-card-header">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">groups</span>
+          Demographics &amp; Density
+        </div>
+        <div class="detail-card-body">
+          <div class="big-readouts">
+            <div>
+              <div class="big-readout-val">${s.population.toLocaleString()}</div>
+              <div class="big-readout-label">Population</div>
+            </div>
+            <div>
+              <div class="big-readout-val">${s.persons_per_hectare}</div>
+              <div class="big-readout-label">Persons / hectare</div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-key">Density Tier</span>
+            <span class="stat-value" style="text-transform:capitalize">${s.density_tier}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-key">Area</span>
+            <span class="stat-value">${s.area_hectares} ha</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-key">Priority Score</span>
+            <span class="stat-value">${s.priority_score} / 6</span>
+          </div>
+          <p class="disclaimer" style="margin-top:16px">
+            Density classified against URDPFI 2014/2015 norms (75–125 pph, small town, plain terrain).
+            Area is estimated — replace with drone measurement for production use.
+          </p>
+        </div>
+      </div>
+
+      <!-- Hazard Exposure -->
+      <div class="detail-card">
+        <div class="detail-card-header">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">flood</span>
+          Hazard Exposure
+        </div>
+        <div class="detail-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          ${hazardBlock}
+          <div class="disclaimer">
+            ${labels.hazardNote}
+            <a href="/dashboard?region=${region}">View on map →</a>
+          </div>
+          <div style="margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="/dashboard?region=${region}" style="display:inline-flex;align-items:center;gap:5px;background:#0F1B2D;color:#fff;border-radius:5px;padding:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">
+              <span class="material-symbols-outlined" style="font-size:15px;font-variation-settings:'FILL' 1">map</span>
+              View on Map
+            </a>
+            <a href="/resources" style="display:inline-flex;align-items:center;gap:5px;background:none;color:#0F1B2D;border:1px solid rgba(15,27,45,0.3);border-radius:5px;padding:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;">
+              <span class="material-symbols-outlined" style="font-size:15px">inventory_2</span>
+              Resources
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVACUATION ROUTES -->
+    <div class="detail-card">
+      <div class="detail-card-header">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">directions_car</span>
+        Evacuation Routes
+        <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:#5B6472;text-transform:uppercase;letter-spacing:0.08em;font-weight:400;">Illustrative reference</span>
+      </div>
+      <div class="detail-card-body">
+        <div class="disclaimer" style="margin-bottom:16px">
+          ⚠ This prototype does not yet compute real evacuation routes or capacities.
+          A production version would integrate OpenStreetMap road network data and terrain/elevation.
+          Content below is illustrative only.
+        </div>
+        <div class="routes-card">
+          <div class="route-item">
+            <span class="route-label primary">Primary</span>
+            <h3>Route via NH-715K</h3>
+            <p>Illustrative — not computed by this prototype.</p>
+          </div>
+          <div class="route-item">
+            <span class="route-label secondary">Secondary</span>
+            <h3>Ferry crossing point</h3>
+            <p>Illustrative — not computed by this prototype.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATED -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:4px;">
+      <a href="/protocols" style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#5B6472;text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;" onmouseover="this.style.color='#0F1B2D'" onmouseout="this.style.color='#5B6472'">
+        <span class="material-symbols-outlined" style="font-size:15px">gavel</span> Protocols &amp; Guidelines
+      </a>
+      <a href="/resources" style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#5B6472;text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;" onmouseover="this.style.color='#0F1B2D'" onmouseout="this.style.color='#5B6472'">
+        <span class="material-symbols-outlined" style="font-size:15px">inventory_2</span> Resource Allocation
+      </a>
+    </div>
+  `;
+}
+
+load();
+</script>
+</body>
+</html>

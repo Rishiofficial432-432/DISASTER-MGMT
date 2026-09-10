@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resource Allocation Management View - CivicReloc</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=IBM+Plex+Serif:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dae3f4",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#79849b",
+                        "primary-container": "#101c2e",
+                        "primary-fixed": "#d7e3fc",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#444749",
+                        "surface-tint": "#535f74",
+                        "safe-teal": "#1F7A5C",
+                        "priority-amber": "#D98324",
+                        "tertiary": "#000000",
+                        "surface-dim": "#d2daeb",
+                        "inverse-surface": "#28313d",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "navy-ink": "#0F1B2D",
+                        "primary-fixed-dim": "#bbc7df",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-high": "#e0e9f9",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed-variant": "#3c475b",
+                        "on-tertiary-fixed": "#410000",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-surface-variant": "#44474c",
+                        "inverse-primary": "#bbc7df",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "paper-bg": "#F7F8FA",
+                        "secondary": "#5c5f60",
+                        "tertiary-container": "#410000",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "on-secondary-container": "#606365",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#8e130c",
+                        "on-primary-fixed": "#101c2e",
+                        "on-tertiary-container": "#e45342",
+                        "secondary-fixed": "#e1e2e4",
+                        "on-background": "#131c28",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#dae3f4",
+                        "hazard-red": "#C0392B",
+                        "primary": "#000000",
+                        "secondary-container": "#dee0e2",
+                        "outline": "#75777d",
+                        "on-surface": "#131c28",
+                        "muted-text": "#5B6472",
+                        "secondary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-tabular": ["IBM Plex Mono"],
+                        "display-lg": ["IBM Plex Serif"],
+                        "headline-md": ["IBM Plex Serif"],
+                        "verdict-lg": ["IBM Plex Serif"],
+                        "label-caps": ["IBM Plex Mono"],
+                        "body-main": ["IBM Plex Sans"],
+                        "body-sm": ["IBM Plex Sans"],
+                        "verdict-xl": ["IBM Plex Serif"]
+                    },
+                    "fontSize": {
+                        "data-tabular": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "verdict-lg": ["48px", { "lineHeight": "56px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-main": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "verdict-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #F7F8FA; /* paper-bg */
+        }
+    </style>
+</head>
+<body class="font-body-main text-body-main text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-navy-ink dark:bg-primary-container full-width top-0 border-b border-muted-text/20 flat no shadows flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50 transition-colors duration-150">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">CivicReloc</span>
+</div>
+<div class="flex items-center gap-gutter">
+<!-- Search on right logic implied -->
+<button aria-label="Search" class="text-on-primary-container hover:bg-primary-fixed-variant/20 p-2 rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button aria-label="notifications" class="text-on-primary-container hover:bg-primary-fixed-variant/20 p-2 rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="help_outline" class="text-on-primary-container hover:bg-primary-fixed-variant/20 p-2 rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<img alt="Field Officer Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A highly detailed close-up portrait of a resolute field officer in official CivicReloc uniform, standing in a dimly lit high-tech control room with soft blue screen glows illuminating their face. Minimalist, serious, and authoritative photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCooaOLtkkunBdC0KNHzvXnzk3vjPwPrRzelYwRIVVKYwyRRdzBz370gamuX7s_apKR-WzB0sFOxceRMXgL6KDGlPvjt-zcgbYANRGNYyG6hAdB6wxj8JtJczlFonrPinyx6Sv2sw4E-TFHDeJOil12uyfrWoM7TueuxiLgq5yXEc2uBNaXx1vzlgAtv6bSqkQ0r-K-JFgEZF9Bgd6BbxEMHA9-COh5l107MhIZKOZOPtPtFrAPbhid"/>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="flex flex-1 pt-16">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-surface-dim docked left-0 h-full w-64 border-r border-muted-text/20 flat no shadows fixed left-0 top-16 bottom-0 flex flex-col z-40 transition-all duration-200 ease-in-out hidden md:flex">
+<div class="p-container-padding border-b border-muted-text/20 mb-stack-md flex items-center gap-gutter">
+<img alt="Relocation Authority Logo" class="w-10 h-10 object-contain" data-alt="A high-contrast, minimalist logo emblem for a fictional Relocation Authority, featuring a stylized compass rose inside a geometric shield on a stark white background. Official, sharp, and modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnoinSYis41YAtCTrzHQwtubr5cc6xWVbTeHZoUfByTZ2dCbrRQ4_B4SMVy3K57nwvk-JMgrN6OzQAnAF7AyVWDEPfQ0oeeuZGcPoLnIQYn7kSbBrmXbSmNhkP362IGbAru37dnNQuHZK2fjtNgSX18cJrTkTEUkPDkRrG5VCoJs_ZaRIQYrokkS_roy_FyDmNmulSUU6js7zkOQIHdOArNDOKOdgGaa0ZfSbrzsx2xNHgHF-kiKj0"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-navy-ink truncate">Disaster Ops</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Sector 7G</p>
+</div>
+</div>
+<div class="px-gutter mb-stack-lg">
+<button class="w-full bg-hazard-red text-on-primary font-label-caps text-label-caps py-2 px-4 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                    Report Hazard
+                </button>
+</div>
+<ul class="flex flex-col flex-1 px-sm">
+<!-- Inactive Map View -->
+<li>
+<a class="flex items-center gap-gutter px-gutter py-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">map</span>
+                        Map View
+                    </a>
+</li>
+<!-- Inactive Assessments -->
+<li>
+<a class="flex items-center gap-gutter px-gutter py-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">assignment</span>
+                        Assessments
+                    </a>
+</li>
+<!-- ACTIVE Resources -->
+<li>
+<a class="flex items-center gap-gutter px-gutter py-3 font-label-caps text-label-caps text-primary border-r-4 border-primary font-bold bg-surface-container transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                        Resources
+                    </a>
+</li>
+<!-- Inactive Protocols -->
+<li>
+<a class="flex items-center gap-gutter px-gutter py-3 font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">gavel</span>
+                        Protocols
+                    </a>
+</li>
+</ul>
+<div class="mt-auto border-t border-muted-text/20 p-gutter">
+<ul class="flex flex-col">
+<li>
+<a class="flex items-center gap-gutter px-gutter py-2 font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+                            Settings
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-gutter px-gutter py-2 font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">logout</span>
+                            Log Out
+                        </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-container-padding flex flex-col gap-stack-lg max-w-[1120px] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between border-b-2 border-navy-ink pb-stack-sm gap-stack-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-navy-ink tracking-tight">Strategic Resource Allocation</h1>
+<p class="font-body-main text-body-main text-muted-text mt-1">Live Inventory &amp; Deployment Oversight</p>
+</div>
+<div class="flex gap-gutter">
+<button class="bg-transparent border border-navy-ink text-navy-ink font-body-sm text-body-sm font-semibold py-2 px-4 rounded hover:bg-surface-container-low transition-colors">
+                        Request Reinforcements
+                    </button>
+<button class="bg-navy-ink text-on-primary font-body-sm text-body-sm font-semibold py-2 px-4 rounded hover:bg-navy-ink/90 transition-colors">
+                        Deploy Units
+                    </button>
+</div>
+</div>
+<!-- Section 1: Inventory Overview (Bento Grid approach) -->
+<section aria-labelledby="inventory-heading">
+<h2 class="font-headline-md text-headline-md text-navy-ink mb-stack-md sr-only" id="inventory-heading">Inventory Overview</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Medical Units Card (Strained - Hazard Red) -->
+<div class="bg-surface-container-lowest border-t-4 border-hazard-red border-x border-b border-muted-text/20 p-container-padding rounded-b">
+<div class="flex justify-between items-start mb-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-hazard-red">local_hospital</span>
+<h3 class="font-label-caps text-label-caps text-navy-ink">Medical Units</h3>
+</div>
+<span class="bg-hazard-red/10 text-hazard-red border border-hazard-red/30 px-2 py-0.5 rounded-full font-label-caps text-[10px]">Strained</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-verdict-lg text-verdict-lg text-navy-ink">4</span>
+<span class="font-body-main text-body-main text-muted-text pb-1">/ 10 Available</span>
+</div>
+<div class="w-full bg-surface-container mt-stack-sm h-1 rounded-full overflow-hidden">
+<div class="bg-hazard-red h-full w-[40%]"></div>
+</div>
+</div>
+<!-- Transport Vehicles Card (Ready - Safe Teal) -->
+<div class="bg-surface-container-lowest border-t-4 border-safe-teal border-x border-b border-muted-text/20 p-container-padding rounded-b">
+<div class="flex justify-between items-start mb-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-safe-teal">local_shipping</span>
+<h3 class="font-label-caps text-label-caps text-navy-ink">Transport Vehicles</h3>
+</div>
+<span class="bg-safe-teal/10 text-safe-teal border border-safe-teal/30 px-2 py-0.5 rounded-full font-label-caps text-[10px]">Ready</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-verdict-lg text-verdict-lg text-navy-ink">12</span>
+<span class="font-body-main text-body-main text-muted-text pb-1">/ 15 Available</span>
+</div>
+<div class="w-full bg-surface-container mt-stack-sm h-1 rounded-full overflow-hidden">
+<div class="bg-safe-teal h-full w-[80%]"></div>
+</div>
+</div>
+<!-- Temporary Shelters Card (Active - Priority Amber) -->
+<div class="bg-surface-container-lowest border-t-4 border-priority-amber border-x border-b border-muted-text/20 p-container-padding rounded-b">
+<div class="flex justify-between items-start mb-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-priority-amber">home_work</span>
+<h3 class="font-label-caps text-label-caps text-navy-ink">Temporary Shelters</h3>
+</div>
+<span class="bg-priority-amber/10 text-priority-amber border border-priority-amber/30 px-2 py-0.5 rounded-full font-label-caps text-[10px]">Active</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-verdict-lg text-verdict-lg text-navy-ink">3</span>
+<span class="font-body-main text-body-main text-muted-text pb-1">/ 5 Deployed</span>
+</div>
+<div class="w-full bg-surface-container mt-stack-sm h-1 rounded-full overflow-hidden">
+<div class="bg-priority-amber h-full w-[60%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Deployment Status (Data Table) -->
+<section aria-labelledby="deployment-heading" class="flex-1 bg-surface-container-lowest border border-muted-text/20 rounded overflow-hidden flex flex-col">
+<div class="p-container-padding border-b border-muted-text/20 bg-paper-bg flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-navy-ink" id="deployment-heading">Deployment Log</h2>
+<button aria-label="Filter Log" class="text-navy-ink hover:bg-surface-container-high p-1 rounded transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-navy-ink text-on-primary">
+<th class="py-3 px-4 font-label-caps text-label-caps w-1/4">Resource Type</th>
+<th class="py-3 px-4 font-label-caps text-label-caps w-1/4">Location</th>
+<th class="py-3 px-4 font-label-caps text-label-caps w-1/4">Status</th>
+<th class="py-3 px-4 font-label-caps text-label-caps w-1/4 text-right">ETA / Time logged</th>
+</tr>
+</thead>
+<tbody class="font-data-tabular text-data-tabular text-navy-ink divide-y divide-muted-text/20">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-text text-[16px]">local_hospital</span>
+                                    Med-Unit Alpha
+                                </td>
+<td class="py-4 px-4">Sector 4, Outpost B</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-safe-teal text-safe-teal bg-safe-teal/5 text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-safe-teal"></span> Deployed
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right text-muted-text">08:45 AM (Local)</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-text text-[16px]">local_shipping</span>
+                                    Convoy Heavy-7
+                                </td>
+<td class="py-4 px-4">Route 66 Northbound</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-priority-amber text-priority-amber bg-priority-amber/5 text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-priority-amber animate-pulse"></span> In Transit
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right">14:30 (T-Minus 2h)</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-text text-[16px]">home_work</span>
+                                    Shelter Array C
+                                </td>
+<td class="py-4 px-4">Central Hub</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-muted-text text-muted-text bg-surface-container text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-muted-text"></span> On Standby
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right text-muted-text">N/A</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 px-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-muted-text text-[16px]">local_hospital</span>
+                                    Med-Unit Gamma
+                                </td>
+<td class="py-4 px-4">Sector 9, Quarantine</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-hazard-red text-hazard-red bg-hazard-red/5 text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-hazard-red"></span> Critical Load
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right text-muted-text">11:15 AM (Local)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+</div>
+</body></html>

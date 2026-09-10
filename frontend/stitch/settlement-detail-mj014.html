@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicReloc - Settlement Detail View: MJ-014</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dae3f4",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#79849b",
+                        "primary-container": "#101c2e",
+                        "primary-fixed": "#d7e3fc",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#444749",
+                        "surface-tint": "#535f74",
+                        "safe-teal": "#1F7A5C",
+                        "priority-amber": "#D98324",
+                        "tertiary": "#000000",
+                        "surface-dim": "#d2daeb",
+                        "inverse-surface": "#28313d",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "navy-ink": "#0F1B2D",
+                        "primary-fixed-dim": "#bbc7df",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-high": "#e0e9f9",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed-variant": "#3c475b",
+                        "on-tertiary-fixed": "#410000",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-surface-variant": "#44474c",
+                        "inverse-primary": "#bbc7df",
+                        "outline-variant": "#c5c6cd",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "paper-bg": "#F7F8FA",
+                        "secondary": "#5c5f60",
+                        "tertiary-container": "#410000",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "on-secondary-container": "#606365",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#8e130c",
+                        "on-primary-fixed": "#101c2e",
+                        "on-tertiary-container": "#e45342",
+                        "secondary-fixed": "#e1e2e4",
+                        "on-background": "#131c28",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#dae3f4",
+                        "hazard-red": "#C0392B",
+                        "primary": "#000000",
+                        "secondary-container": "#dee0e2",
+                        "outline": "#75777d",
+                        "on-surface": "#131c28",
+                        "muted-text": "#5B6472",
+                        "secondary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "data-tabular": ["IBM Plex Mono"],
+                        "display-lg": ["IBM Plex Serif"],
+                        "headline-md": ["IBM Plex Serif"],
+                        "verdict-lg": ["IBM Plex Serif"],
+                        "label-caps": ["IBM Plex Mono"],
+                        "body-main": ["IBM Plex Sans"],
+                        "body-sm": ["IBM Plex Sans"],
+                        "verdict-xl": ["IBM Plex Serif"]
+                    },
+                    "fontSize": {
+                        "data-tabular": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "verdict-lg": ["48px", { "lineHeight": "56px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-main": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "verdict-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-paper-bg text-on-surface font-body-main min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="bg-navy-ink dark:bg-primary-container text-on-primary dark:text-primary-fixed font-body-main text-body-main full-width top-0 border-b border-muted-text/20 flat no shadows flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50 transition-colors duration-150">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-md text-headline-md font-bold text-on-primary">CivicReloc</span>
+</div>
+<div class="flex items-center gap-gutter">
+<!-- Search on right -->
+<div class="hidden md:flex bg-surface-container-lowest/10 rounded-full px-4 py-2 border border-muted-text/20">
+<span class="material-symbols-outlined text-on-primary text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-on-primary placeholder-on-primary-container text-body-sm focus:ring-0 p-0 w-64" placeholder="Search operations..." type="text"/>
+</div>
+<button class="hover:bg-primary-fixed-variant/20 p-2 rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-primary-fixed-variant/20 p-2 rounded-full transition-colors duration-150">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<img alt="Field Officer Profile" class="w-8 h-8 rounded-full border border-muted-text/20 object-cover" data-alt="A detailed headshot of a field officer in uniform, serious expression, high-contrast lighting, digital document aesthetic, professional photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_LZ2-mtKtp2t_pWDi3m5CBXewd3vgnpxspk8SgKvkp4r_U3OSVt__F7NFkpB005c3Rmm8gGnN_FMiZIiArJrcILL51gbSlWnK_nDZ6cCmxJTdGlT_qINiv3rmgOep-UHnfWHgKyS67XnDz_Mdhkwc5FQ7ftYi_Ndr_xWR7dgxoz0OFOktPme0cFW361U0ZWe8zy2trYyzXDaCNqoXzzNBd1G5JXD5pyt2r7PDkCofP5xZl8C7KaAG"/>
+</div>
+</header>
+<div class="flex flex-1 pt-16 h-screen overflow-hidden">
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex bg-surface-container-lowest dark:bg-surface-dim text-navy-ink dark:text-primary-fixed font-label-caps text-label-caps docked left-0 h-full w-64 border-r border-muted-text/20 flat no shadows fixed left-0 top-16 bottom-0 flex flex-col z-40 transition-all duration-200 ease-in-out">
+<div class="p-container-padding border-b border-muted-text/20 flex items-center gap-gutter">
+<img alt="Relocation Authority Logo" class="w-10 h-10 rounded border border-muted-text/20" data-alt="A minimalist logo for a generic Relocation Authority, featuring a shield and stylized waves, stark monochrome design, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcaGDbNVa1A1TtEKPAQYeq-Hkn8V5aUWRN1EqeKi1aUp5_dzBV_Ux0ohmcLVry8YKhqcu7hKaC3ZhbtRH9MlO6p92DfALkGZPuDGoE8qo9qktq-FGoi-WSY5IYWZiNiy60t4hqal41VQ2alzpj9pUw70Z2TRToRGIyXsq96jYhp4pnmRKeAWNBMHmFW4yUg7JUeAPOucZvFBL2MTGg4RyLdHFE8VlHlB_mWxe-_6vWHTdwooNM-lez"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-navy-ink">Disaster Ops</h2>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Sector 7G</span>
+</div>
+</div>
+<div class="p-container-padding">
+<button class="w-full bg-navy-ink text-on-primary font-body-sm text-body-sm py-2 px-4 rounded border border-navy-ink hover:bg-surface-tint transition-colors duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="report">report</span>
+                    Report Hazard
+                </button>
+</div>
+<ul class="flex-1 overflow-y-auto py-stack-sm">
+<!-- Map View (Active) -->
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-primary border-r-4 border-primary font-bold bg-surface-container hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map View</span>
+</a>
+</li>
+<!-- Assessments -->
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Assessments</span>
+</a>
+</li>
+<!-- Resources -->
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Resources</span>
+</a>
+</li>
+<!-- Protocols -->
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Protocols</span>
+</a>
+</li>
+</ul>
+<div class="border-t border-muted-text/20 py-stack-sm">
+<ul>
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-container-padding py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Log Out</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 overflow-y-auto bg-paper-bg p-container-padding lg:p-[48px]">
+<div class="max-w-[1120px] mx-auto space-y-stack-lg pb-24">
+<!-- Verdict Header -->
+<div class="border-l-4 border-hazard-red pl-gutter py-unit">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-hazard-red text-on-error font-label-caps text-label-caps uppercase px-3 py-1 rounded-full inline-block">Critical Status</span>
+<span class="text-on-surface-variant font-data-tabular text-data-tabular">ID: MJ-014</span>
+</div>
+<h1 class="font-verdict-lg text-verdict-lg text-navy-ink tracking-tight">Settlement Dossier: MJ-014</h1>
+</div>
+<!-- Bento Grid Layout for Data -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Section 1: Demographics (Span 4) -->
+<div class="lg:col-span-4 bg-surface-container-lowest border border-muted-text/20 p-container-padding flex flex-col justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-navy-ink mb-stack-md pb-unit border-b border-muted-text/20">Demographics &amp; Vulnerability</h2>
+<div class="space-y-stack-md mt-stack-md">
+<div class="flex justify-between items-end border-b border-muted-text/10 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider">Total Population</span>
+<span class="font-data-tabular text-data-tabular text-navy-ink text-xl">4,200</span>
+</div>
+<div class="flex justify-between items-end border-b border-muted-text/10 pb-2">
+<span class="font-body-sm text-body-sm text-hazard-red uppercase tracking-wider font-semibold">High-Risk Households</span>
+<span class="font-data-tabular text-data-tabular text-hazard-red text-xl">120</span>
+</div>
+<div class="flex justify-between items-end border-b border-muted-text/10 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider">Mobility-Impaired</span>
+<span class="font-data-tabular text-data-tabular text-priority-amber text-xl">45</span>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg pt-stack-sm border-t border-muted-text/20">
+<p class="font-label-caps text-label-caps text-muted-text">Data verified 04:00 HRS</p>
+</div>
+</div>
+<!-- Section 2: Terrain Analysis (Span 8) -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-muted-text/20 flex flex-col overflow-hidden relative group">
+<div class="absolute inset-0 z-0">
+<!-- Using background image as a static map representation per prompt -->
+<div class="bg-cover bg-center w-full h-full opacity-60" data-alt="A minimalist, high-contrast digital terrain map showing topographical elevation lines in light grey on a white background, with a stark red flood line overlay indicating dangerous proximity to a settlement zone. Professional, data-driven aesthetic." data-location="MJ-014 Terrain Sector" style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+</div>
+<div class="relative z-10 p-container-padding bg-surface-container-lowest/80 backdrop-blur-sm border-b border-muted-text/20 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-navy-ink">Terrain Analysis</h2>
+<span class="material-symbols-outlined text-navy-ink" data-icon="terrain">terrain</span>
+</div>
+<div class="relative z-10 flex-1 p-container-padding flex flex-col justify-end bg-gradient-to-t from-surface-container-lowest to-transparent">
+<div class="grid grid-cols-2 gap-gutter mt-auto bg-surface-container-lowest/90 p-4 border border-muted-text/20 rounded">
+<div>
+<span class="font-label-caps text-label-caps text-muted-text block mb-1">Elevation Profile</span>
+<div class="flex items-center gap-2 text-hazard-red">
+<span class="material-symbols-outlined text-sm" data-icon="trending_down">trending_down</span>
+<span class="font-data-tabular text-data-tabular font-bold">-12m below sea level</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-muted-text block mb-1">Flood Line Proximity</span>
+<div class="flex items-center gap-2 text-priority-amber">
+<span class="material-symbols-outlined text-sm" data-icon="water">water</span>
+<span class="font-data-tabular text-data-tabular font-bold">450m (Critical threshold)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Evacuation Routes (Span 12) -->
+<div class="lg:col-span-12 bg-surface-container-lowest border border-muted-text/20 p-container-padding">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-stack-md pb-unit border-b border-muted-text/20 gap-4">
+<h2 class="font-headline-md text-headline-md text-navy-ink">Evacuation Routes</h2>
+<button class="bg-navy-ink text-on-primary font-body-sm text-body-sm py-2 px-6 rounded border border-navy-ink hover:bg-surface-tint transition-colors duration-150 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                                Download Evacuation Plan
+                            </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-stack-md">
+<!-- Primary Route -->
+<div class="border border-safe-teal/30 bg-safe-teal/5 p-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-safe-teal text-white px-2 py-1 rounded-bl font-label-caps text-label-caps text-[10px]">PRIMARY</div>
+<h3 class="font-data-tabular text-data-tabular text-navy-ink mb-2">Route Alpha-1 (High Ground)</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Status:</span>
+<span class="font-data-tabular text-data-tabular text-safe-teal">Clear</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Est. Travel Time:</span>
+<span class="font-data-tabular text-data-tabular">45 mins</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Capacity:</span>
+<span class="font-data-tabular text-data-tabular">2,500 pax/hr</span>
+</div>
+</div>
+</div>
+<!-- Secondary Route -->
+<div class="border border-priority-amber/30 bg-priority-amber/5 p-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-priority-amber text-white px-2 py-1 rounded-bl font-label-caps text-label-caps text-[10px]">SECONDARY</div>
+<h3 class="font-data-tabular text-data-tabular text-navy-ink mb-2">Route Beta-2 (Coastal Road)</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Status:</span>
+<span class="font-data-tabular text-data-tabular text-priority-amber">Monitor (Rising Water)</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Est. Travel Time:</span>
+<span class="font-data-tabular text-data-tabular">60 mins</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Capacity:</span>
+<span class="font-data-tabular text-data-tabular">1,200 pax/hr</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer (from JSON) -->
+<footer class="bg-surface-container-low dark:bg-surface-container-highest text-on-surface-variant dark:text-on-primary-container font-body-sm text-body-sm full-width bottom-0 border-t border-muted-text/20 flat no shadows flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-stack-sm mt-auto z-40">
+<div class="font-label-caps text-label-caps font-bold mb-4 md:mb-0">
+                    © 2024 Civic Disaster Management Authority. Restricted access.
+                </div>
+<div class="flex flex-wrap gap-4 justify-center">
+<a class="text-muted-text hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Legal</a>
+<a class="text-muted-text hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Safety Protocols</a>
+<a class="text-muted-text hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-muted-text hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">System Status</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

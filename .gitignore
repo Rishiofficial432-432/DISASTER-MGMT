@@ -1,0 +1,73 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Project runtime & logs
+.pids
+logs/
+cache/
+uploads/
+*.log
+
+# Backup & scratch scripts
+backup/
+check_model_scores.py
+find_and_score.py
+SIH2026-IDEA-Presentation-Filled.html
+
+# Model weights & weight directories
+*.pth
+*.pt
+*.onnx
+model/*.pth
+model/*.pt
+model/**/*.pth
+model/**/*.pt
+model/anomly/
+cuda modls/
+!model/.gitkeep
+
+# Archived old projects
+_archive_old_project/
+
+# Data
+data/files.zip
+data/.DS_Store
+data/**/.DS_Store
+datasets/
+*.csv
+pdfs/
+*.pdf
+
+# Jupyter & Streamlit
+.ipynb_checkpoints/
+.streamlit/secrets.toml
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Coverage / test
+.coverage
+.pytest_cache/
+.tox/
