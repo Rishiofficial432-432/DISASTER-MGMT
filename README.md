@@ -45,17 +45,17 @@ It supports two dataset modes:
 
 ```mermaid
 flowchart LR
-    U[Field Operator / Planner] --> FE[Frontend UI\nHTML/CSS/JS + Leaflet]
+    U["Field Operator / Planner"] --> FE["Frontend UI<br/>HTML/CSS/JS + Leaflet"]
     FE -->|REST API| BE[Flask Backend]
 
     BE --> HZ[Hazard GeoJSON Loader]
-    BE --> IDX[Shapely STRtree\nSpatial Index]
-    BE --> PIPE[Assessment Pipeline]
-    PIPE --> CAP[Capacity Classifier\nURDPFI tiers]
-    PIPE --> PRI[Priority Engine\nScore + Rank]
+    BE --> IDX["Shapely STRtree<br/>Spatial Index"]
+    BE --> PIPE["Assessment Pipeline"]
+    PIPE --> CAP["Capacity Classifier<br/>URDPFI tiers"]
+    PIPE --> PRI["Priority Engine<br/>Score + Rank"]
 
-    BE --> DATA[(Settlement & Hazard Data Files)]
-    BE --> EXT[Nominatim Geocoding\n(OpenStreetMap)]
+    BE --> DATA["Settlement & Hazard Data Files"]
+    BE --> EXT["Nominatim Geocoding<br/>(OpenStreetMap)"]
 
     FE <-->|Assessment, Hazard, Detail| BE
 ```
@@ -88,13 +88,13 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    A[Settlement Input\nname/lat/lon/pop/area/terrain] --> B[Hazard Lookup\nPoint in Polygon]
-    B --> C[Persons Per Hectare\npopulation / area]
-    C --> D[Density Tier\nlow/moderate/high]
-    B --> E[Hazard Severity\npolygon severity or derived fallback]
-    D --> F[Priority Score\nseverity*overlap + density weight]
+    A["Settlement Input<br/>name/lat/lon/pop/area/terrain"] --> B["Hazard Lookup<br/>Point in Polygon"]
+    B --> C["Persons Per Hectare<br/>population / area"]
+    C --> D["Density Tier<br/>low/moderate/high"]
+    B --> E["Hazard Severity<br/>polygon severity or derived fallback"]
+    D --> F["Priority Score<br/>severity*overlap + density weight"]
     E --> F
-    F --> G[Ranking\nhigh / medium / low]
+    F --> G["Ranking<br/>high / medium / low"]
 ```
 
 ---
