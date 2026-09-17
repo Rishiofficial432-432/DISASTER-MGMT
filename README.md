@@ -166,10 +166,10 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[/] -->|Check result CTA| B[/dashboard]
-    B --> C[/settlement/<name>]
-    B --> D[/protocols]
-    B --> E[/resources]
+    A["/"] -->|Check result CTA| B["/dashboard"]
+    B --> C["/settlement/<name>"]
+    B --> D["/protocols"]
+    B --> E["/resources"]
     C --> B
     C --> A
 ```
